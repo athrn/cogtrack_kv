@@ -1,0 +1,89 @@
+# -*- coding: utf-8 -*-
+
+#:kivy 1.9
+
+# TODO:
+# Set default font for all labels.
+
+# HACK: Must import screenmanager to use transitions in kv file.
+#:import SM kivy.uix.screenmanager
+#:include buttons.kv
+#:include demo.kv
+
+# Fixed height control bar
+<ControlBar@BoxLayout>:
+  size_hint: (1.0, None)
+  pos_hint: {'top':1.0}
+  height: '48dp'
+
+
+<SelectGameButton@Button>:
+  font_size: '48dp'
+  text: u'Select Game'
+  size_hint: (1, None)
+  pos_hint: {'top':1.0} # , 'center_x': 0.5}
+
+      
+<MainScreen@Screen>:
+  on_enter: app.title = root.name
+  
+<SelectScreen@MainScreen>:
+  name: 'SelectScreen'
+  BoxLayout:
+    orientation: 'vertical'
+    ControlBar:
+      EmptySpace:
+      ControlButton:
+        id: config_button
+        icon: 'config'
+    BoxLayout:
+      id: select_game_buttons
+      SelectGameButton:
+        on_press:
+          root.manager.current = 'PlayScreen'
+        
+<PlayScreen@MainScreen>:
+  name: 'PlayScreen'
+  BoxLayout:
+    orientation: 'vertical'
+    ControlBar:
+      EmptySpace:
+      ControlButton:
+        id: stop_button
+        icon: 'go-next'
+        on_press: root.manager.current = 'ScoreScreen'
+    RelativeLayout:
+      id: game_area
+      DemoButton:
+
+<ScoreScreen@MainScreen>:
+  name: 'ScoreScreen'
+  BoxLayout:
+    orientation: 'vertical'
+    ControlBar:
+      ControlButton:
+        id: score_delete_button
+        icon: 'score-delete'
+        background_color: (1, 0, 0, 0.5)
+        on_press: root.manager.current = 'SelectScreen'
+      EmptySpace:
+      ControlButton:
+        id: quit_button
+        icon: 'score-save'
+        background_color: (0, 1, 0, 0.5) 
+        on_press: root.manager.current = 'SelectScreen'
+    RelativeLayout:
+      id: score_area
+      Button:
+        text: 'Score'
+
+  
+ScreenManager:
+  id: sm
+  transition: SM.FadeTransition()
+  
+  SelectScreen:
+  PlayScreen:
+  ScoreScreen:
+    
+
