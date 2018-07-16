@@ -1,4 +1,5 @@
 # Emacs and other backup files
+*.bak?
 *~
 
 # Byte-compiled / optimized / DLL files

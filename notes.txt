@@ -1,3 +1,4 @@
+* Icons scale poorly. I would much prefer svg or font glyphs.
 * Using icons from xubuntu highcontrast icons /usr/share/icons/HighContrast/scalable
     * Would prefer to use unicode glyphs but can't use any above 0xFFFF
     * https://github.com/kivy/kivy/issues/4741

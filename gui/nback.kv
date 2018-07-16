@@ -1,0 +1,40 @@
+#:kivy 1.9
+#:import theme theme.theme
+#:include cogwidget
+
+<ScoreBox:CogLabel>:
+  size_hint: None, None
+  size: self.height, self.height
+  score: 0
+  text: self.score
+  text_size: theme.default.text_height
+
+<ScoreBar:BoxLayout>:
+  orientation: 'horizontal'
+  ScoreBox:
+    id: wrong_match
+    bg: theme.color.wrong
+  ScoreBox:
+    id: wrong_inaction
+    bg: theme.color.wrong2
+  ScoreBox:
+    id: correct_inaction
+    bg: theme.color.right2
+  ScoreBox:
+    id: correct_match
+    bg: theme.color.right
+   EmptySpace:
+
+
+<NBack:BoxLayout>:
+  orientation: 'vertical'
+  Label:
+    id: current_symbol
+    size_hint: None, theme.default.size_ratio
+  BoxLayout:
+    orientation: 'horizontal'
+    CogButton:
+      text: 'Different'
+    CogButton:
+      text: 'Same'
+      

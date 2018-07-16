@@ -1,0 +1,44 @@
+#:kivy 1.8
+#:import theme theme.theme
+
+<CogButton@Button>:
+  background_color: theme.color.button_background
+  background_normal: ''
+
+<IconButton@CogButton>:
+  text: ''
+  rotate: 0
+  icon: 'config'
+    
+  background_normal: './icons/{}.png'.format(self.icon)
+  background_down: ''
+  size_hint: None, 1.0
+  size: self.height, self.height  
+    
+  canvas.before:
+    PushMatrix
+    Rotate:
+      angle: root.rotate
+      axis: 0, 0, 1
+      origin: root.center
+  canvas.after:
+    PopMatrix
+
+<CogLabel@Label>:
+  text: ''
+  # background_color: theme.color.background
+  # canvas.before:
+  #   Color:
+  #     rgba: self.background_color
+  #   Rectangle:
+  #     size: self.size
+  #     pos: self.pos
+    
+    
+<Glue@CogLabel>:
+  size_hint: 1.0, 1.0
+    
+<EmptySquare@CogLabel>:
+  size_hint: None, 1.0
+  size: self.height, self.height
+  

@@ -10,14 +10,18 @@ GridLayout:
   Button:
     text: 'Dummy'
   IconButton:
+    size_hint: None, None
+    height: '48dp'
     background_color: (.1,.1,1,1)
   IconButton:
+    size_hint: None, None
     icon: 'go-next'
+    height: '48dp'
     background_color: (.1,.1,1,1)
   """
 
 if __name__ == "__main__":
-    from buttons import IconButton
+    Builder.load_file('cogwidget.kv')
     root = Builder.load_string(build)
     run_widget(root)
     

@@ -7,8 +7,10 @@
 
 # HACK: Must import screenmanager to use transitions in kv file.
 #:import SM kivy.uix.screenmanager
-#:include buttons.kv
+#:include cogwidget.kv
 #:include demo.kv
+
+<ControlButton@IconButton>:
 
 # Fixed height control bar
 <ControlBar@BoxLayout>:
@@ -32,7 +34,7 @@
   BoxLayout:
     orientation: 'vertical'
     ControlBar:
-      EmptySpace:
+      Glue:
       ControlButton:
         id: config_button
         icon: 'config'
@@ -47,9 +49,13 @@
   BoxLayout:
     orientation: 'vertical'
     ControlBar:
-      EmptySpace:
       ControlButton:
-        id: stop_button
+        id: back_button
+        icon: 'go-previous'
+        on_press: root.manager.current = 'SelectScreen'
+      Glue:
+      ControlButton:
+        id: stop_game_button
         icon: 'go-next'
         on_press: root.manager.current = 'ScoreScreen'
     RelativeLayout:
@@ -66,7 +72,7 @@
         icon: 'score-delete'
         background_color: (1, 0, 0, 0.5)
         on_press: root.manager.current = 'SelectScreen'
-      EmptySpace:
+      Glue:
       ControlButton:
         id: quit_button
         icon: 'score-save'
