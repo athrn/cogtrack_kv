@@ -17,7 +17,7 @@ BoxLayout:
 
 if __name__ == "__main__":
     Builder.load_file('demo.kv')
-    Builder.load_file('mainview.kv')
+    Builder.load_file('mainapp.kv')
     root = Builder.load_string(build)
     run_widget(root)
     

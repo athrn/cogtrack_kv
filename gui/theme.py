@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
-from tools import PrettyProperties as pp
+from tools import NamedProperties as prop
 
-theme = pp(
-    default=pp(
+theme = prop(
+    default=prop(
         text_height='18dp',
         size_ratio=0.8, # Size of text inside box.
         ),
-    color=pp(
+    color=prop(
         button_background=(.7, .7, 1, 1),
         wrong=(1, 0, 0, 1),
         wrong2=(1, 0, 0.5, 1),

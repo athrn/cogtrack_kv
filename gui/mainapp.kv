@@ -41,8 +41,10 @@
     BoxLayout:
       id: select_game_buttons
       SelectGameButton:
+        game_id: '2-Back'
+        text: self.game_id
         on_press:
-          root.manager.current = 'PlayScreen'
+          app.start_game(self.game_id)
         
 <PlayScreen@MainScreen>:
   name: 'PlayScreen'
@@ -74,7 +76,7 @@
         on_press: root.manager.current = 'SelectScreen'
       Glue:
       ControlButton:
-        id: quit_button
+        id: score_save_button
         icon: 'score-save'
         background_color: (0, 1, 0, 0.5) 
         on_press: root.manager.current = 'SelectScreen'
@@ -89,7 +91,10 @@ ScreenManager:
   transition: SM.FadeTransition()
   
   SelectScreen:
+    id: select_screen
   PlayScreen:
+    id: play_screen
   ScoreScreen:
+    id: score_screen
     
 

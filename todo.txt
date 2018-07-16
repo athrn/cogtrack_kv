@@ -1,0 +1,6 @@
+
+* Reconsider naming of TheApp/MainApp to avoid auto loading of kv file.
+* kivy unittesting is a hack. Use deprecated interactive launcher or something else?
+* Gui testing
+** Add games
+** Save score
