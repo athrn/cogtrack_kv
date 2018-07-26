@@ -3,8 +3,9 @@ from tools import NamedProperties as prop
 
 theme = prop(
     default=prop(
-        text_height='18dp',
-        size_ratio=0.8, # Size of text inside box.
+        font_size='24sp',
+        size_hint_y=0.8, # Size of text inside box.
+        size_hint_x=0.8, # Size of text inside box.
         ),
     color=prop(
         button_background=(.7, .7, 1, 1),

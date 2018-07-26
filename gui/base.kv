@@ -1,11 +1,12 @@
 #:kivy 1.8
 #:import theme theme.theme
 
-<CogButton@Button>:
+<BaseButton@Button>:
   background_color: theme.color.button_background
-  background_normal: ''
+  # background_normal: ''
+  font_size: theme.default.font_size
 
-<IconButton@CogButton>:
+<IconButton@BaseButton>:
   text: ''
   rotate: 0
   icon: 'config'
@@ -24,21 +25,16 @@
   canvas.after:
     PopMatrix
 
-<CogLabel@Label>:
+<BaseLabel@Label>:
   text: ''
-  # background_color: theme.color.background
-  # canvas.before:
-  #   Color:
-  #     rgba: self.background_color
-  #   Rectangle:
-  #     size: self.size
-  #     pos: self.pos
-    
-    
-<Glue@CogLabel>:
+  font_size: theme.default.font_size
+
+  
+<Glue@BaseLabel>:
   size_hint: 1.0, 1.0
-    
-<EmptySquare@CogLabel>:
+
+  
+<EmptySquare@BaseLabel>:
   size_hint: None, 1.0
   size: self.height, self.height
   

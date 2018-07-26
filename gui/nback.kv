@@ -2,12 +2,12 @@
 #:import theme theme.theme
 #:include base
 
-<ScoreBox:CogLabel>:
+<ScoreBox:BaseLabel>:
   size_hint: None, None
   size: self.height, self.height
   score: 0
   text: self.score
-  text_size: theme.default.text_height
+
 
 <ScoreBar:BoxLayout>:
   orientation: 'horizontal'
@@ -24,17 +24,17 @@
     id: correct_match
     bg: theme.color.right
    EmptySpace:
-
+     
 
 <NBack:BoxLayout>:
   orientation: 'vertical'
-  Label:
+  BaseLabel:
     id: current_symbol
-    size_hint: None, theme.default.size_ratio
+    size_hint: None, theme.default.size_hint_y
   BoxLayout:
     orientation: 'horizontal'
-    CogButton:
+    BaseButton:
       text: 'Different'
-    CogButton:
+    BaseButton:
       text: 'Same'
       
