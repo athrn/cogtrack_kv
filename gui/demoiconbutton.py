@@ -21,7 +21,7 @@ GridLayout:
   """
 
 if __name__ == "__main__":
-    Builder.load_file('cogwidget.kv')
+    Builder.load_file('base.kv')
     root = Builder.load_string(build)
     run_widget(root)
     

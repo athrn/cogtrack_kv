@@ -10,6 +10,12 @@ def start_app(app):
     app._app_window = win
     app.root = app.build()
     app.window = win
+    app.dispatch('on_start')
+
+# def start_app(app):
+#     from kivy.interactive import InteractiveLauncher
+#     i = InteractiveLauncher(app)
+#     i.run()
 
 
 def press(widget):

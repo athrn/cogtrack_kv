@@ -7,8 +7,7 @@
 
 # HACK: Must import screenmanager to use transitions in kv file.
 #:import SM kivy.uix.screenmanager
-#:include cogwidget.kv
-#:include demo.kv
+#:include base.kv
 
 <ControlButton@IconButton>:
 
@@ -18,12 +17,22 @@
   pos_hint: {'top':1.0}
   height: '48dp'
 
+  canvas.before:
+    Color:
+      rgba: (1., 0, 0, 0.5)
+    Rectangle:
+      pos: self.pos
+      size: self.size
+
 
 <SelectGameButton@Button>:
+  game_id: 'No GameID'
   font_size: '48dp'
-  text: u'Select Game'
+  text: self.game_id
   size_hint: (1, None)
   pos_hint: {'top':1.0} # , 'center_x': 0.5}
+  on_press:
+    app.start_game(self.game_id)
 
       
 <MainScreen@Screen>:
@@ -39,12 +48,10 @@
         id: config_button
         icon: 'config'
     BoxLayout:
+      # size_hint: (1, 1)
       id: select_game_buttons
-      SelectGameButton:
-        game_id: '2-Back'
-        text: self.game_id
-        on_press:
-          app.start_game(self.game_id)
+      orientation: 'vertical'
+      # pos_hint: {'top':1.0} # , 'center_x': 0.5}
         
 <PlayScreen@MainScreen>:
   name: 'PlayScreen'
@@ -62,7 +69,6 @@
         on_press: root.manager.current = 'ScoreScreen'
     RelativeLayout:
       id: game_area
-      DemoButton:
 
 <ScoreScreen@MainScreen>:
   name: 'ScoreScreen'

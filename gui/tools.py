@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 from kivy.lang import Builder
+from kivy.logger import Logger
 
 class NamedProperties(dict):
     def __init__(self, **kwargs):
@@ -14,6 +15,7 @@ def load_kv(pyfile):
     """ Load a kv file with the same base name as file and in the same directory """
     root, ext = os.path.splitext(os.path.abspath(pyfile))
     kvfile = root + '.kv'
+    Logger.info('Loading ' + kvfile)
     return Builder.load_file(kvfile)
 
 
