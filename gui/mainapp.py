@@ -22,7 +22,7 @@ class TheApp(App):
 
     @property
     def game_buttons(self):
-        # NOTE: Return only game buttons. Ignore Glue
+        # NOTE: Return only game buttons. Ignore Space
         return [btn for btn in self.select_screen.ids.select_game_buttons.children if btn.text.strip()]
 
     def on_start(self):
@@ -35,7 +35,7 @@ class TheApp(App):
             btn = Factory.SelectGameButton(game_id=id_)
             self.select_screen.ids.select_game_buttons.add_widget(btn)
 
-        self.select_screen.ids.select_game_buttons.add_widget(Factory.Glue())
+        self.select_screen.ids.select_game_buttons.add_widget(Factory.Space())
 
     def start_game(self, game_id):
         game_controller = self.controller.get_game_controller(game_id)

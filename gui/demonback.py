@@ -1,11 +1,22 @@
+# from kivy.lang import Builder
+
 from demo import run_widget
-import nback
+
+
+def run():
+    import nback
+    root = nback.NBack()
+    run_widget(root)
+
+# def run2():
+#     # nback.kv has no main "root" widget. They all extend stuff.
+#     root = Builder.load_file('nback.kv')
+#     run_widget(root)
+    
+
 
 if __name__ == "__main__":
-    from buttons import IconButton
-    root = Builder.load_string(build)
-    run_widget(root)
-    
+    run()
 
 
     

@@ -12,18 +12,11 @@
 <ControlButton@IconButton>:
 
 # Fixed height control bar
-<ControlBar@BoxLayout>:
+<ControlBar@BoxLayout+Background>:
   size_hint: (1.0, None)
   pos_hint: {'top':1.0}
-  height: '48dp'
-
-  canvas.before:
-    Color:
-      rgba: (1., 0, 0, 0.5)
-    Rectangle:
-      pos: self.pos
-      size: self.size
-
+  height: theme.default.control_bar_height
+  
 
 <SelectGameButton@BaseButton>:
   game_id: 'No GameID'
@@ -42,7 +35,7 @@
   BoxLayout:
     orientation: 'vertical'
     ControlBar:
-      Glue:
+      Space:
       ControlButton:
         id: config_button
         icon: 'config'
@@ -61,7 +54,7 @@
         id: back_button
         icon: 'go-previous'
         on_press: root.manager.current = 'SelectScreen'
-      Glue:
+      Space:
       ControlButton:
         id: stop_game_button
         icon: 'go-next'
@@ -79,7 +72,7 @@
         icon: 'score-delete'
         background_color: (1, 0, 0, 0.5)
         on_press: root.manager.current = 'SelectScreen'
-      Glue:
+      Space:
       ControlButton:
         id: score_save_button
         icon: 'score-save'

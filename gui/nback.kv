@@ -1,40 +1,55 @@
 #:kivy 1.9
 #:import theme theme.theme
-#:include base
+#:include base.kv
 
-<ScoreBox:BaseLabel>:
-  size_hint: None, None
-  size: self.height, self.height
+<ScoreBox@EmptySquare>:
   score: 0
-  text: self.score
+  text: str(self.score)
 
 
-<ScoreBar:BoxLayout>:
+<ScoreBar@BoxLayout>:
   orientation: 'horizontal'
+  size_hint: 1.0, None
+  size: 0, theme.default.button_height
   ScoreBox:
     id: wrong_match
     bg: theme.color.wrong
+    background_color: theme.color.wrong
   ScoreBox:
     id: wrong_inaction
     bg: theme.color.wrong2
+  Space:  
   ScoreBox:
     id: correct_inaction
-    bg: theme.color.right2
+    bg: theme.color.correct2
   ScoreBox:
     id: correct_match
-    bg: theme.color.right
-   EmptySpace:
+    bg: theme.color.correct
      
 
-<NBack:BoxLayout>:
+<NBack@BoxLayout>:
   orientation: 'vertical'
+  ScoreBar:
   BaseLabel:
     id: current_symbol
-    size_hint: None, theme.default.size_hint_y
+    size_hint: None, 1.0 # theme.default.size_hint_y
+    pos_hint: {'center_x':0.5}
+    text: "X"
+    font_size: self.height
   BoxLayout:
     orientation: 'horizontal'
+    size_hint: 1.0, None
+    size: 0, theme.default.button_height
     BaseButton:
-      text: 'Different'
+      id: match_button
+      text: 'Match'
+      bg: theme.color.correct
     BaseButton:
-      text: 'Same'
-      
+      id: no_match_button
+      text: 'No Match'
+      bg: theme.color.wrong
+
+
+# NBackWidget:
+#   NBack:
+    

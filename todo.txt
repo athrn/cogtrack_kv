@@ -1,3 +1,6 @@
+* Testing. base.kv not found if running pytest from root directory and not gui directory.
+** Check out paths etc for finding kv files.
+
 
 * Reconsider naming of TheApp/MainApp to avoid auto loading of kv file.
 * kivy unittesting is a hack. Use deprecated interactive launcher or something else?

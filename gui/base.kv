@@ -1,21 +1,46 @@
 #:kivy 1.8
 #:import theme theme.theme
+# #:include theme.kv
 
+<Background@Widget>:
+  bg: 0., 0., 0., 0.
+  
+  # Paint background color
+  canvas.before:
+    Color:
+      rgba: self.bg
+    Rectangle:
+      pos: self.pos
+      size: self.size
+  
+  
 <BaseButton@Button>:
-  background_color: theme.color.button_background
+  # Default to filling the width but not the height
+  size_hint: 1.0, None
+  size: theme.default.button_size
+  bg: theme.color.button_background
+  background_color: self.bg
   # background_normal: ''
   font_size: theme.default.font_size
+  
 
 <IconButton@BaseButton>:
   text: ''
   rotate: 0
   icon: 'config'
-    
+
+  height: theme.default.icon_size
+  
   background_normal: './icons/{}.png'.format(self.icon)
   background_down: ''
-  size_hint: None, 1.0
-  size: self.height, self.height  
-    
+
+  # Fixed Size. Do not scale since scaling is so crap
+  size_hint: None, None
+  pos_hint: {'center_x':0.5, 'center_y':0.5}
+
+  size: self.height, self.height
+
+  
   canvas.before:
     PushMatrix
     Rotate:
@@ -25,16 +50,22 @@
   canvas.after:
     PopMatrix
 
-<BaseLabel@Label>:
+<BaseLabel@Label+Background>:
   text: ''
   font_size: theme.default.font_size
+  # TODO: Can't use ref for bg. bg is set to None when canvas is called. font_size works.
 
+  # Default to transparent background
+  bg: 0., 0., 0., 0.
   
-<Glue@BaseLabel>:
+
+# Empty expanding space.
+<Space@BaseLabel>:
   size_hint: 1.0, 1.0
 
-  
+
+  # Autoresizes width to equal height.
+# TODO: Rename?
 <EmptySquare@BaseLabel>:
   size_hint: None, 1.0
   size: self.height, self.height
-  
