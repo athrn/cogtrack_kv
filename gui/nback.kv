@@ -31,7 +31,7 @@
   orientation: 'vertical'
   ScoreBar:
   BaseLabel:
-    id: current_symbol
+    id: show_symbol
     size_hint: None, 1.0 # theme.default.size_hint_y
     pos_hint: {'center_x':0.5}
     text: "X"
@@ -44,10 +44,12 @@
       id: match_button
       text: 'Match'
       bg: theme.color.correct
+      on_press: root.on_match()
     BaseButton:
       id: no_match_button
       text: 'No Match'
       bg: theme.color.wrong
+      on_press: root.on_different()
 
 
 # NBackWidget:

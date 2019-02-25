@@ -5,8 +5,14 @@ from demo import run_widget
 
 def run():
     import nback
-    root = nback.NBack()
-    run_widget(root)
+    nback = nback.NBack()
+
+    nback.show_symbol("Y")
+    nback.set_callbacks(on_match=lambda : nback.show_symbol("M"),
+                        on_different=lambda : nback.show_symbol("D"),
+                        )
+    
+    run_widget(nback)
 
 # def run2():
 #     # nback.kv has no main "root" widget. They all extend stuff.
