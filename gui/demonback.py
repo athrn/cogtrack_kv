@@ -9,8 +9,10 @@ def run():
 
     nback.show_symbol("Y")
     nback.set_callbacks(on_match=lambda : nback.show_symbol("M"),
-                        on_different=lambda : nback.show_symbol("D"),
+                        on_no_match=lambda : nback.show_symbol("D"),
                         )
+
+    nback.set_score(1,2,3,4)
     
     run_widget(nback)
 

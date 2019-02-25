@@ -16,11 +16,11 @@
     bg: theme.color.wrong
     background_color: theme.color.wrong
   ScoreBox:
-    id: wrong_inaction
+    id: wrong_no_match
     bg: theme.color.wrong2
   Space:  
   ScoreBox:
-    id: correct_inaction
+    id: correct_no_match
     bg: theme.color.correct2
   ScoreBox:
     id: correct_match
@@ -30,6 +30,7 @@
 <NBack@BoxLayout>:
   orientation: 'vertical'
   ScoreBar:
+    id: score_bar
   BaseLabel:
     id: show_symbol
     size_hint: None, 1.0 # theme.default.size_hint_y
@@ -49,7 +50,7 @@
       id: no_match_button
       text: 'No Match'
       bg: theme.color.wrong
-      on_press: root.on_different()
+      on_press: root.on_no_match()
 
 
 # NBackWidget:
