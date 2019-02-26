@@ -31,7 +31,7 @@ class NBack(object):
 
     def __init__(self,
                  show_symbol=lambda symbol: None,
-                 show_score=lambda correct_match, correct_no_match, wrong_match, wrong_no_match: None,
+                 show_score=lambda correct_match, correct_no_match, wrong_match, wrong_no_match, no_response: None,
                  schedule=lambda time, function: None,
                  n_back=2,
                  max_rounds=10,
@@ -88,7 +88,17 @@ class NBack(object):
         is_match = self.is_current_symbol_a_match()
         self.score[name][is_match] += 1
         self.reaction_time[name][is_match] += reaction_time
+
+        self.show_score(correct_match=self.score[MATCH][True],
+                        correct_no_match=self.score[NO_MATCH][False],
+                        wrong_match=self.score[MATCH][False],
+                        wrong_no_match=self.score[NO_MATCH][True],
+                        no_response=self.score[NO_RESPONSE][False] + self.score[NO_RESPONSE][True],
+                        )
         
+
+    def hide_symbol(self):
+        self.show_symbol('')
 
     def next_char(self):
         if self.is_stopped:
@@ -110,7 +120,7 @@ class NBack(object):
 
         self.show_symbol(char)
         self.reaction_start_time = current_time()
-        self.schedule(self.show_symbol_interval, lambda : self.show_symbol(''))
+        self.schedule(self.show_symbol_interval, self.hide_symbol)
         self.schedule(self.next_symbol_interval, self.next_char)
 
 

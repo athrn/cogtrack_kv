@@ -365,7 +365,74 @@ class Tests(ut.TestCase):
         nback.user_match()
         nback.user_no_match()
         assert_score(nback, correct_match=1)
-    
+
+    def testA_callbacks(self):
+        schedule=MagicMock()
+        show_symbol=MagicMock()
+        show_score=MagicMock()
+        
+        nback = NBack(n_back=1,
+                      char_generator=fixed_chars('AABBCD'),
+                      show_symbol=show_symbol,
+                      show_score=show_score,
+                      schedule=schedule)
+        hide_call = call(nback.show_symbol_interval, nback.hide_symbol)
+        next_call = call(nback.next_symbol_interval, nback.next_char)
+
+        show_symbol.assert_not_called()
+        nback.next_char()
+        show_symbol.assert_called_once_with('A')
+        schedule.assert_has_calls([hide_call, next_call])
+        
+        nback.next_char()
+        show_symbol.assert_called_with('A')
+        schedule.assert_has_calls([hide_call, next_call]*2)
+        nback.user_match()
+        show_score.assert_called_once_with(correct_match=1,
+                                           correct_no_match=0,
+                                           wrong_match=0,
+                                           wrong_no_match=0,
+                                           no_response=0)
+
+        nback.next_char()
+        show_symbol.assert_called_with('B')
+        schedule.assert_has_calls([hide_call, next_call]*3)
+        nback.user_no_match()
+        show_score.assert_called_with(correct_match=1,
+                                      correct_no_match=1,
+                                      wrong_match=0,
+                                      wrong_no_match=0,
+                                      no_response=0)
+
+        # Display no response as "wrong"
+        nback.next_char()
+        show_symbol.assert_called_with('B')
+        nback.next_char()
+        show_symbol.assert_called_with('C')
+        show_score.assert_called_with(correct_match=1,
+                                      correct_no_match=1,
+                                      wrong_match=0,
+                                      wrong_no_match=0,
+                                      no_response=1)
+
+        nback.next_char()
+        show_symbol.assert_called_with('D')
+        show_score.assert_called_with(correct_match=1,
+                                      correct_no_match=1,
+                                      wrong_match=0,
+                                      wrong_no_match=0,
+                                      no_response=2)
+        nback.user_match()
+        show_score.assert_called_with(correct_match=1,
+                                      correct_no_match=1,
+                                      wrong_match=1,
+                                      wrong_no_match=0,
+                                      no_response=2)
+
+        
+        
+
+
 
 if __name__ == "__main__":
     ut.main(failfast=True, exit=False)
