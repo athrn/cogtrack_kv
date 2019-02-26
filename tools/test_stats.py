@@ -16,7 +16,7 @@ class Tests(ut.TestCase):
         self.assertEqual(1.5, s.avg)
         self.assertEqual(0.5, s.stdev)
 
-        self.assertEqual("N:4 Sum:6 Avg:1.5 Stdev:0.5", str(s))
+        self.assertEqual("n=4 sum=6 avg=1.5 stdev=0.5 min=1 max=2", str(s))
 
     # TODO: Consider removing + operator support. May be confusing. s + 1 + (2 + 3) 
     def test_repeated_plus(self):
@@ -38,6 +38,12 @@ class Tests(ut.TestCase):
         self.assertEqual(1.5, s.avg)
         self.assertAlmostEqual(sqrt(2*0.25/2), s.stdev)
         
+    def test_min_max(self):
+        s = Stats()
+        s = s + 1 + 3 + 2
+        self.assertEqual(1, s.min)
+        self.assertEqual(3, s.max)
+
 
 if __name__ == "__main__":
     ut.main(failfast=True, exit=False)
