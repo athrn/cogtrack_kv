@@ -1,3 +1,4 @@
+from kivy.app import App
 from kivy.lang import Builder
 from kivy.base import EventLoop
 
@@ -15,6 +16,20 @@ class Counter(dict):
         return increase_counter
 
 
+class WidgetApp(App):
+    def __init__(self, widget):
+        self.widget = widget
+
+    def build(self):
+        # REVIEW: Not sure if I have to set root explicitly
+        self.root = self.widget
+        return self.widget
+
+def start_widget(widget):
+    app = WidgetApp(widget)
+    start_app(app)
+    return app
+
 
 # NOTE: TODO: This is a non-standard and probably non-safe way to initialize the app for unit testing.
 def start_app(app):    
@@ -26,6 +41,7 @@ def start_app(app):
     app.root = app.build()
     app.window = win
     app.dispatch('on_start')
+
 
 # def start_app(app):
 #     from kivy.interactive import InteractiveLauncher

@@ -2,6 +2,7 @@
 import os
 from kivy.lang import Builder
 from kivy.logger import Logger
+from kivy.clock import Clock
 
 class NamedProperties(dict):
     def __init__(self, **kwargs):
@@ -17,6 +18,10 @@ def load_kv(pyfile):
     kvfile = root + '.kv'
     Logger.info('Loading ' + kvfile)
     return Builder.load_file(kvfile)
+
+
+def schedule(timeout, func):
+    Clock.schedule_once(func, timeout)
 
 
 if __name__ == "__main__":

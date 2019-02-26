@@ -1,7 +1,13 @@
 # -*- coding: utf-8 -*-
 import unittest as ut
+from kivy.app import App
+from kivy.uix.label import Label
 
+from testing import start_widget
 from tools import * 
+
+def print_stuff():
+    print("This was called")
 
 class Tests(ut.TestCase):
     def test_namedproperties(self):
@@ -13,6 +19,20 @@ class Tests(ut.TestCase):
         self.assertEqual('Dog', y.dog)
         self.assertRaises(AttributeError, getattr, y, 'ape')
         self.assertRaises(AttributeError, getattr, x, 'dog')
+
+    # def test_schedule(self):
+    #     # REVIEW: Does not work as test...
+    #     label = Label(text='Old Text')
+    #     start_widget(label)
+
+    #     def set_label_text(t):
+    #         label.text = 'New Text'
+    #         print("Setting")
+        
+    #     schedule(0.01, set_label_text)
+    #     Clock.usleep(1e5)
+
+    #     print(label.text)
         
 
 if __name__ == "__main__":
