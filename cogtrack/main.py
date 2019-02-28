@@ -1,12 +1,18 @@
 from kivy.lang import Builder
 from kivy.app import App
-import akivy
 
 from kivy.config import Config
 Config.set('graphics', 'fullscreen', 0)
-Config.set('graphics', 'width', 500)
-Config.set('graphics', 'height', 800)
+Config.set('graphics', 'width', 540)
+Config.set('graphics', 'height', 960)
 
+import cogtrack.game
+import cogtrack.gui
+
+def make_nback():
+    gui = cogtrack.gui.nback.NBack()
+    game = cogtrack.game.nback.NBack()
+    return gui
 
 
 class CogTrackApp(App):
@@ -16,7 +22,7 @@ class CogTrackApp(App):
                                              })
 
     def build(self):
-        return Builder.load_file('./gui/main.kv')        
+        return make_nback() 
         
 
 
