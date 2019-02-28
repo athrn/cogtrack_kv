@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import unittest as ut
 
+import setprojectpath
 from testing import start_app, press, Counter
 from nback import NBack
 

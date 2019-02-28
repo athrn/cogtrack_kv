@@ -2,6 +2,8 @@
 import unittest as ut
 from pprint import pprint
 
+import setprojectpath
+
 from testing import start_app, press
 from mainapp import TheApp
 

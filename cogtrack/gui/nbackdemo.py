@@ -1,4 +1,4 @@
-# from kivy.lang import Builder
+import setprojectpath
 
 from demo import run_widget
 

@@ -2,6 +2,8 @@ from kivy.app import App
 from kivy.lang import Builder
 from kivy.base import EventLoop
 
+# import setprojectpath
+
 class Counter(dict):
     # def __init__(self):
     #     self.count = {}
