@@ -1,3 +1,10 @@
+* Consider replacing all "include"s in kv files with load_file from python.
+  * Every kv file has corresponding py file with load_file(__file__)
+  * If b.kv depends on a.kv, b.py must include a.kv before loading b.kv
+  * Pythons import mechanism will prevent double loading.
+  * Some of Kivys path issues can be avoided.
+  * Does not solve #:import of python stuff.
+
 * Testing. base.kv not found if running pytest from root directory and not gui directory.
 ** Check out paths etc for finding kv files.
 
