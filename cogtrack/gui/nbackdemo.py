@@ -1,5 +1,3 @@
-import setprojectpath
-
 from demo import run_widget
 
 

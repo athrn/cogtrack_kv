@@ -2,7 +2,7 @@
 import unittest as ut
 from pprint import pprint
 
-import setprojectpath
+# from kivy.tests.common import GraphicUnitTest
 
 from testing import start_app, press
 from mainapp import TheApp
@@ -36,9 +36,13 @@ class WidgetRepository(object):
 
 
 class Tests(ut.TestCase):
+# class Tests(GraphicUnitTest):
     
     @classmethod
     def setUpClass(cls):
+        # TODO: Don't know how to do this...
+        # setkivyresourcepath.set_kivy_resource_path()
+        # print(setkivyresourcepath.resource_paths)
         # NOTE: Can't use setUp since kv file is loaded once per test.
         # TODO: Figure out a safer way to write kivy tests.
         cls.app = TheApp(MainController(), WidgetRepository())

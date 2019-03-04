@@ -2,12 +2,12 @@ from tools import load_kv, print_traceback
 from kivy.uix.boxlayout import BoxLayout
 
 if __name__ != "__main__":
-    # Prevent double loading of kv file when running as script.
-    # print_traceback()
+    # Prevent double loading of kv file when executing as script
+    import base    
     load_kv(__file__)
     
 # NOTE: Must match definition in kv file. I.e. boxlayout and not widget
-# TODO: Review. There is still some kind of double loading
+# TODO: Review. There is still re-declaration of NBack
 class NBack(BoxLayout):
 
     def __init__(self):

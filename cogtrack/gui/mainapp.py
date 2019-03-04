@@ -1,8 +1,14 @@
 # -*- coding: utf-8 -*-
 
+# import setkivyresourcepath
+# setkivyresourcepath.set_kivy_resource_path()
+
 from kivy.app import App
 from kivy.factory import Factory
 from tools import load_kv
+
+# HACK: Must load base.py before loading mainapp.kv. mainapp depends on base but can't #include for whatever reason
+import base
 
 # NOTE: Must NOT name the app the same as the kv file. The auto-import happens BEFORE build is called.
 class TheApp(App):

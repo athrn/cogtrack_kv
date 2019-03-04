@@ -7,12 +7,18 @@
 
 # HACK: Must import screenmanager to use transitions in kv file.
 #:import SM kivy.uix.screenmanager
-#:include cogtrack/gui/base.kv
+
+# TODO: WTF! Can't include base or "Unknown file" error appears.
+# I can include non-existing file foobase.kvfoo without complaints!
+# #:include base.kv
+# #:include base.kvfooo
+
+#:import theme cogtrack.gui.theme.theme
 
 <ControlButton@IconButton>:
 
 # Fixed height control bar
-<ControlBar@BoxLayout+Background>:
+<ControlBar@BoxLayout>:
   size_hint: (1.0, None)
   pos_hint: {'top':1.0}
   height: theme.default.control_bar_height

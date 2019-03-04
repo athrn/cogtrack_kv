@@ -1,3 +1,10 @@
+Avoid import and include.
+Don't know why I can't import theme.py sometimes
+Sometimes base.kv isn't found or loaded multiple times...
+
+https://kivy.org/doc/stable/contribute-unittest.html
+from kivy.tests.common import GraphicUnitTest, UnitTestTouch
+
 * Consider replacing all "include"s in kv files with load_file from python.
   * Every kv file has corresponding py file with load_file(__file__)
   * If b.kv depends on a.kv, b.py must include a.kv before loading b.kv
