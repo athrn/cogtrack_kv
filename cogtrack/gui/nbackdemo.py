@@ -1,7 +1,7 @@
 from demo import run_widget
 
 
-def run():
+def run_simple():
     import nback
     nback = nback.NBack()
 
@@ -10,14 +10,17 @@ def run():
                         on_no_match=lambda : nback.show_symbol("D"),
                         )
 
-    nback.set_score(1,2,3,4)
+    nback.show_score(1,2,3,4,5)
     
     run_widget(nback)
 
-# def run2():
-#     # nback.kv has no main "root" widget. They all extend stuff.
-#     root = Builder.load_file('nback.kv')
-#     run_widget(root)
+def run():
+    import nback
+    from test_nback import DummyGame
+    nback = nback.NBack.make(DummyGame)
+    nback.game.start()
+    run_widget(nback)
+
     
 
 

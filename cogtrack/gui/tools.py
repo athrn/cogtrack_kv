@@ -48,6 +48,9 @@ def set_kivy_resource_path():
     resource_add_path(kv_dir)
     Logger.info('Resource path={}'.format(resource_paths))
 
+def schedule(time, callback):
+    todo
+    pass
 
 
 if __name__ == "__main__":

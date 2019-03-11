@@ -15,6 +15,7 @@ theme = prop(
         ),
     color=prop(
         button_background=(.7, .7, 1, 1),
+        no_response=(1, 1, 0, 1),
         wrong=(1, 0, 0, 1),
         wrong2=(1, 0.5, 0, 1),
         correct2=(0.75, 1, 0, 1),

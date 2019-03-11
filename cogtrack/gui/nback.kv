@@ -19,6 +19,10 @@
     bg: theme.color.wrong2
   Space:  
   ScoreBox:
+    id: no_response
+    bg: theme.color.no_response
+  Space:  
+  ScoreBox:
     id: correct_no_match
     bg: theme.color.correct2
   ScoreBox:
@@ -41,15 +45,15 @@
     size_hint: 1.0, None
     size: 0, theme.default.button_height
     BaseButton:
-      id: match_button
-      text: 'Match'
-      bg: theme.color.correct
-      on_press: root.on_match()
-    BaseButton:
       id: no_match_button
       text: 'No Match'
       bg: theme.color.wrong
       on_press: root.on_no_match()
+    BaseButton:
+      id: match_button
+      text: 'Match'
+      bg: theme.color.correct
+      on_press: root.on_match()
 
 
 # NBackWidget:
