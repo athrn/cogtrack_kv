@@ -7,8 +7,8 @@ if __name__ != "__main__":
     tools.load_kv(__file__)
     
 # NOTE: Must match definition in kv file. I.e. boxlayout and not widget
-# TODO: Review. There is still re-declaration of NBack
-class NBack(BoxLayout):
+# TODO: Review. There is still re-declaration of NBackWidget
+class NBackWidget(BoxLayout):
 
     def __init__(self):
         BoxLayout.__init__(self)
@@ -42,7 +42,7 @@ class NBack(BoxLayout):
 
 if __name__ == "__main__":
     import unittest as ut
-    ut.main(module='test_nback', failfast=True, exit=False)
+    ut.main(module='test_nbackwidget', failfast=True, exit=False)
 
-    from nbackdemo import run
+    from nbackwidgetdemo import run
     run()
