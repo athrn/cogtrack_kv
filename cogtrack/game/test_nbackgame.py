@@ -2,7 +2,7 @@
 import unittest as ut
 import time
 
-from nback import NBack, fixed_chars, MATCH, NO_MATCH, NO_RESPONSE
+from nbackgame import NBackGame, fixed_chars, MATCH, NO_MATCH, NO_RESPONSE
 from mock import MagicMock, call
 
 def score_sanity_check(nback, offset=0):
@@ -41,7 +41,7 @@ def call_string(m):
 class Tests(ut.TestCase):
 
     def test10_warmup(self):
-        nback = NBack(n_back = 2)
+        nback = NBackGame(n_back = 2)
 
         self.assertFalse(nback.is_after_warmup())
         nback.next_char()
@@ -53,7 +53,7 @@ class Tests(ut.TestCase):
         nback.next_char()
 
     def test11_current_round(self):
-        nback = NBack(n_back = 2)
+        nback = NBackGame(n_back = 2)
 
         self.assertEqual(-2, nback.current_round)
         nback.next_char()
@@ -67,7 +67,7 @@ class Tests(ut.TestCase):
 
 
     def test12_max_rounds(self):        
-        nback = NBack(max_rounds = 1,
+        nback = NBackGame(max_rounds = 1,
                       n_back = 1)
 
         self.assertFalse(nback.is_stopped)
@@ -77,7 +77,7 @@ class Tests(ut.TestCase):
         nback.next_char() # Stop
         self.assertTrue(nback.is_stopped)
 
-        nback = NBack(max_rounds = 2,
+        nback = NBackGame(max_rounds = 2,
                       n_back = 1)
 
         self.assertFalse(nback.is_stopped)
@@ -89,7 +89,7 @@ class Tests(ut.TestCase):
         nback.next_char() # Stop
         self.assertTrue(nback.is_stopped)
 
-        nback = NBack(max_rounds = 2,
+        nback = NBackGame(max_rounds = 2,
                       n_back = 2)
 
         self.assertFalse(nback.is_stopped)
@@ -104,7 +104,7 @@ class Tests(ut.TestCase):
 
     def test2_next_char(self):
         show_symbol=MagicMock()
-        nback = NBack(show_symbol=show_symbol,
+        nback = NBackGame(show_symbol=show_symbol,
                       char_generator=fixed_chars("ACB"))
         nback.next_char()
         show_symbol.assert_called_once_with('A')
@@ -116,7 +116,7 @@ class Tests(ut.TestCase):
     
     def test3_is_current_symbol_a_match(self):
         show_symbol=MagicMock()
-        nback = NBack(max_rounds = 8,
+        nback = NBackGame(max_rounds = 8,
                       n_back=2,
                       show_symbol=show_symbol,
                       char_generator = fixed_chars("XAXBXCDXEX"))
@@ -155,7 +155,7 @@ class Tests(ut.TestCase):
 
     
     def test4_history(self):
-        nback = NBack(n_back=2,
+        nback = NBackGame(n_back=2,
                       char_generator=fixed_chars("ABCDE"))
 
         self.assertEqual(['', '', ''], nback.history)
@@ -171,7 +171,7 @@ class Tests(ut.TestCase):
         self.assertEqual(['D', 'E', 'C'], nback.history)
 
     def test51_user_correct_interaction(self):
-        nback = NBack(n_back=2,
+        nback = NBackGame(n_back=2,
                       char_generator=fixed_chars("AXCXE"))
 
         nback.next_char()
@@ -189,7 +189,7 @@ class Tests(ut.TestCase):
         assert_score(nback, 1, 0, 2, 0)
 
     def test52_user_wrong_interaction(self):
-        nback = NBack(n_back=2,
+        nback = NBackGame(n_back=2,
                       char_generator=fixed_chars("AXCXE"))
 
         nback.next_char()
@@ -209,7 +209,7 @@ class Tests(ut.TestCase):
         score_sanity_check(nback)
 
     def test53_user_no_response(self):
-        nback = NBack(n_back=2,
+        nback = NBackGame(n_back=2,
                       char_generator=fixed_chars("AXCXE"))
 
         nback.next_char()
@@ -225,7 +225,7 @@ class Tests(ut.TestCase):
         score_sanity_check(nback, 1)
 
     def test54_user_interaction_during_warmup_is_ignored(self):
-        nback = NBack(n_back=2,
+        nback = NBackGame(n_back=2,
                       char_generator=fixed_chars("AXCXE"))
 
         nback.next_char()
@@ -239,7 +239,7 @@ class Tests(ut.TestCase):
 
 
     def test61_reaction_time(self):
-        nback = NBack(n_back=2,
+        nback = NBackGame(n_back=2,
                       char_generator=fixed_chars("X"))
 
         nback.next_char()
@@ -260,7 +260,7 @@ class Tests(ut.TestCase):
         self.assert_(0.15 <= t and t <= 0.16)
 
     def test71_user_stop_before_response(self):
-        nback = NBack(n_back=2, char_generator=fixed_chars('X'))
+        nback = NBackGame(n_back=2, char_generator=fixed_chars('X'))
 
         # Warmup
         nback.next_char()
@@ -284,7 +284,7 @@ class Tests(ut.TestCase):
         assert_score(nback, 1, 0, 0, 0)
         
     def test72_user_stop_after_response(self):
-        nback = NBack(n_back=1, char_generator=fixed_chars('X'))
+        nback = NBackGame(n_back=1, char_generator=fixed_chars('X'))
         # Warmup
         nback.next_char()
         # Rounds
@@ -294,20 +294,20 @@ class Tests(ut.TestCase):
         assert_score(nback, 1, 0, 0, 0)
 
     def test72_user_stop_after_warmup(self):
-        nback = NBack(n_back=1, char_generator=fixed_chars('X'))
+        nback = NBackGame(n_back=1, char_generator=fixed_chars('X'))
         # Warmup
         nback.next_char()
         nback.stop()
         assert_score(nback, 0, 0, 0, 0)
 
     def test72_user_stop_during_warmup(self):
-        nback = NBack(n_back=2, char_generator=fixed_chars('X'))
+        nback = NBackGame(n_back=2, char_generator=fixed_chars('X'))
         nback.next_char()
         nback.stop()
         assert_score(nback, 0, 0, 0, 0)
 
     def test72_user_stop_(self):
-        nback = NBack(n_back=1, char_generator=fixed_chars('X'))
+        nback = NBackGame(n_back=1, char_generator=fixed_chars('X'))
         nback.next_char()
         nback.next_char() # Round 1 
         nback.next_char() # No Response
@@ -315,7 +315,7 @@ class Tests(ut.TestCase):
         assert_score(nback, 0, 0, 0, 0, 1, 0)
 
     def test8_nback(self):
-        nback = NBack(n_back = 1,
+        nback = NBackGame(n_back = 1,
                       char_generator = fixed_chars("CCCCDE"))
         nback.next_char() # Warmup
         nback.next_char()
@@ -330,7 +330,7 @@ class Tests(ut.TestCase):
         nback.user_no_match()
         assert_score(nback, 3,0,2,0)
 
-        nback = NBack(n_back = 2,
+        nback = NBackGame(n_back = 2,
                       char_generator = fixed_chars("CCCCDE"))
         nback.next_char() # Warmup
         nback.next_char() # Warmup
@@ -344,7 +344,7 @@ class Tests(ut.TestCase):
         nback.user_no_match()
         assert_score(nback, 2,0,2,0)
 
-        nback = NBack(n_back = 3,
+        nback = NBackGame(n_back = 3,
                       char_generator = fixed_chars("CCCCDE"))
         nback.next_char() # Warmup
         nback.next_char() # Warmup
@@ -358,7 +358,7 @@ class Tests(ut.TestCase):
         assert_score(nback, 1,0,2,0)
 
     def test9_double_user_response(self):
-        nback = NBack(n_back=1, char_generator=fixed_chars('X'))
+        nback = NBackGame(n_back=1, char_generator=fixed_chars('X'))
         nback.next_char() # Warmup
         nback.next_char()
         nback.user_match()
@@ -371,7 +371,7 @@ class Tests(ut.TestCase):
         show_symbol=MagicMock()
         show_score=MagicMock()
         
-        nback = NBack(n_back=1,
+        nback = NBackGame(n_back=1,
                       char_generator=fixed_chars('AABBCD'),
                       show_symbol=show_symbol,
                       show_score=show_score,

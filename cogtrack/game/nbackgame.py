@@ -27,7 +27,7 @@ def fixed_chars(chars="ABCDEF"):
 current_time = time.time
 
 
-class NBack(object):
+class NBackGame(object):
 
     def __init__(self,
                  show_symbol=lambda symbol: None,
@@ -161,6 +161,6 @@ class NBack(object):
 
 if __name__ == "__main__":
     import unittest as ut
-    ut.main(module='test_nback', failfast=True, exit=False)
+    ut.main(module='test_nbackgame', failfast=True, exit=False)
 
     
