@@ -1,7 +1,3 @@
-Avoid import and include.
-Don't know why I can't import theme.py sometimes
-Sometimes base.kv isn't found or loaded multiple times...
-
 https://kivy.org/doc/stable/contribute-unittest.html
 from kivy.tests.common import GraphicUnitTest, UnitTestTouch
 
@@ -15,9 +11,13 @@ from kivy.tests.common import GraphicUnitTest, UnitTestTouch
 * Testing. base.kv not found if running pytest from root directory and not gui directory.
 ** Check out paths etc for finding kv files.
 
-
-* Reconsider naming of TheApp/MainApp to avoid auto loading of kv file.
 * kivy unittesting is a hack. Use deprecated interactive launcher or something else?
 * Gui testing
 ** Add games
 ** Save score
+
+
+x Avoid import and include.
+x Don't know why I can't import theme.py sometimes
+x Sometimes base.kv isn't found or loaded multiple times...
+x * Reconsider naming of TheApp/MainApp to avoid auto loading of kv file.

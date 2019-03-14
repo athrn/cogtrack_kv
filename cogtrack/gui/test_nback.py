@@ -64,26 +64,6 @@ class Tests(ut.TestCase):
         self.assertEqual("4", btns.wrong_no_match.text)
         self.assertEqual("5", btns.no_response.text)
 
-
-    def test9_start(self):
-        w = NBack.make(game_factory=DummyGame,
-                       n_back=2,
-                       max_rounds=5,
-                       show_symbol_interval=1,
-                       next_symbol_interval=3)
-
-        w.game.start()
-        self.assertEqual(tools.schedule, w.game.schedule)
-        self.assertEqual('S', w.ids.show_symbol.text)
-        ids = w.ids.score_bar.ids
-        self.assertEqual(0, ids.correct_match.score)
-        press(w.ids.match_button)
-        self.assertEqual(1, ids.correct_match.score)
-        
-        w.game.stop()
-        self.assertEqual('X', w.ids.show_symbol.text)
-
-        w.game.cancel()
         
 
 if __name__ == "__main__":

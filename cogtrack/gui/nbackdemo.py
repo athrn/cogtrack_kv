@@ -1,7 +1,7 @@
 from demo import run_widget
 
 
-def run_simple():
+def run():
     import nback
     nback = nback.NBack()
 
@@ -12,13 +12,6 @@ def run_simple():
 
     nback.show_score(1,2,3,4,5)
     
-    run_widget(nback)
-
-def run():
-    import nback
-    from test_nback import DummyGame
-    nback = nback.NBack.make(DummyGame)
-    nback.game.start()
     run_widget(nback)
 
     

@@ -146,9 +146,17 @@ class NBack(object):
 
     def user_no_match(self):
         self.parse_response(NO_MATCH)
-        
+
+
+    # TODO: Move to game base class
     def stop(self):
         self.is_stopped = True
+
+    def start(self):
+        pass
+
+    def cancel(self):
+        pass
 
 
 if __name__ == "__main__":

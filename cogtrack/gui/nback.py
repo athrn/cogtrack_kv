@@ -12,8 +12,8 @@ class NBack(BoxLayout):
 
     def __init__(self):
         BoxLayout.__init__(self)
-        self.on_match = lambda : None
-        self.on_no_match = lambda : None
+        self.set_callbacks(lambda : None, lambda : None)
+
 
     def show_score(self,
                   correct_match,
@@ -35,36 +35,6 @@ class NBack(BoxLayout):
 
     def show_symbol(self, symbol):
         self.ids.show_symbol.text = symbol
-
-    # def show_score(self, correct_match, correct_no_match, wrong_match, wrong_no_match, no_response):
-
-    #     pass
-
-    @classmethod
-    def make(cls,
-             game_factory,
-             n_back=2,
-             max_rounds=20,
-             show_symbol_interval=1,
-             next_symbol_interval=3):
-
-        widget = cls()
-        game = game_factory(show_symbol=widget.show_symbol,
-                            show_score=widget.show_score,
-                            schedule=tools.schedule,
-                            n_back=n_back,
-                            max_rounds=max_rounds,
-                            show_symbol_interval=show_symbol_interval,
-                            next_symbol_interval=next_symbol_interval)
-
-        widget.on_match = game.on_match
-        widget.on_no_match = game.on_no_match
-
-        widget.game = game
-        return widget
-
-
-        
         
 
 
