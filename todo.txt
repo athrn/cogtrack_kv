@@ -1,3 +1,8 @@
+* x Connect game to game widget - gui/gamefactory
+* Connect main app to game factory
+* Save score
+    * Note: Add 'stopped/cancelled/partial' tag to games that were stopped half way through.
+
 https://kivy.org/doc/stable/contribute-unittest.html
 from kivy.tests.common import GraphicUnitTest, UnitTestTouch
 
@@ -15,7 +20,9 @@ from kivy.tests.common import GraphicUnitTest, UnitTestTouch
 * Testing. base.kv not found if running pytest from root directory and not gui directory.
 ** Check out paths etc for finding kv files.
 
-* kivy unittesting is a hack. Use deprecated interactive launcher or something else?
+* kivy unittesting is a hack.
+* x Use deprecated interactive launcher or something else?
+  * Use something else...
 * Gui testing
 ** Add games
 ** Save score
