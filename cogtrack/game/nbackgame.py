@@ -14,6 +14,9 @@ NO_MATCH = 'no_match'
 MATCH = 'match'
 NO_RESPONSE = 'no_response'
 
+# TODO: Create character generator with a deterministic number of matches.
+# NOTE: The probability of matches must equal the probability of non matches to prevent intuitive matching.
+
 def random_chars(chars="ABCDEF", rnd=random.randint):
     def next():
         return chars[rnd(0, len(chars)-1)]
@@ -100,6 +103,7 @@ class NBackGame(object):
     def hide_symbol(self):
         self.show_symbol('')
 
+ 
     def next_char(self):
         if self.is_stopped:
             return
@@ -153,7 +157,12 @@ class NBackGame(object):
         self.is_stopped = True
 
     def start(self):
-        pass
+        # TODO: Test this.
+        self.show_symbol('3')
+        self.schedule(1, lambda : self.show_symbol('2'))
+        self.schedule(2, lambda : self.show_symbol('1'))
+        self.schedule(3, self.next_char)
+
 
     def cancel(self):
         pass

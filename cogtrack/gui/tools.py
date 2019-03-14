@@ -49,8 +49,9 @@ def set_kivy_resource_path():
     Logger.info('Resource path={}'.format(resource_paths))
 
 def schedule(time, callback):
-    todo
-    pass
+    # TODO: Test this.
+    # NOTE: Kivy callbacks must take dt argument.
+    Clock.schedule_once(lambda dt : callback(), time)
 
 
 if __name__ == "__main__":
