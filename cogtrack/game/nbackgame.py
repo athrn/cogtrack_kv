@@ -5,6 +5,8 @@ from math import sqrt
 import time
 import itertools
 
+import igame
+
 from cogtrack.tools.stats import Stats
 
 # TODO: How to handle charGenerator properties? Seed?
@@ -30,7 +32,7 @@ def fixed_chars(chars="ABCDEF"):
 current_time = time.time
 
 
-class NBackGame(object):
+class NBackGame(igame.IGame):
 
     def __init__(self,
                  show_symbol=lambda symbol: None,
@@ -151,8 +153,6 @@ class NBackGame(object):
     def user_no_match(self):
         self.parse_response(NO_MATCH)
 
-
-    # TODO: Move to game base class
     def stop(self):
         self.is_stopped = True
 
@@ -162,7 +162,6 @@ class NBackGame(object):
         self.schedule(1, lambda : self.show_symbol('2'))
         self.schedule(2, lambda : self.show_symbol('1'))
         self.schedule(3, self.next_char)
-
 
     def cancel(self):
         pass

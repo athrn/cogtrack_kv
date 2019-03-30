@@ -13,10 +13,9 @@ import base
 # NOTE: Must NOT name the app the same as the kv file. The auto-import happens BEFORE build is called.
 class TheApp(App):
 
-    def __init__(self, main_controller, widget_repository):
+    def __init__(self, main_controller):
         App.__init__(self)
         self.controller = main_controller
-        self.widget_repository = widget_repository
 
     def build(self):
         root = load_kv(__file__)        
@@ -35,24 +34,27 @@ class TheApp(App):
         self.select_screen.ids.select_game_buttons.clear_widgets()
 
         # TODO: BUG: Bug workaround. text not set on first button for unknown reason
-        btn = Factory.SelectGameButton(game_id='bug workaround')
+        dummy_workaround = Factory.SelectGameButton(game_id='bug workaround')
         
-        for id_ in reversed(self.controller.get_game_ids()):
+        for id_ in reversed(self.controller.list_games()):
             btn = Factory.SelectGameButton(game_id=id_)
             self.select_screen.ids.select_game_buttons.add_widget(btn)
 
         self.select_screen.ids.select_game_buttons.add_widget(Factory.Space())
 
     def start_game(self, game_id):
-        game_controller = self.controller.get_game_controller(game_id)
-        widget = self.widget_repository.get_widget(game_controller.widget_id)
+        game, widget = self.controller.start_game(game_id)
 
+
+        # HACK: Need the game object for testing.
+        widget.game = game
+        
         game_area = self.play_screen.ids.game_area
         game_area.clear_widgets()
         game_area.add_widget(widget)
         
         self.sm.current = self.play_screen.name
-        widget.start()
+        game.start()
         
         
         

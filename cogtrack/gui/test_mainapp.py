@@ -9,24 +9,44 @@ from mainapp import TheApp
 
 from kivy.uix.label import Label
 
+from cogtrack.game.igame import IGame
+from cogtrack.app.imaincontroller import IMainController
 
-class GameController:
-    def __init__(self, game_id):
-        self.game_id = game_id
-        self.widget_id = game_id + " widget"
+import mock
 
-class MainController(object):
+# class MockGame(IGame):
+#     def __init__(self, game_id):
+#         self.game_id = game_id
+
+#     def start(self):
+#         pass
+
+#     def stop(self):
+#         pass
+
+#     def cancel(self):
+#         pass
+    
+
+class MainController(IMainController):
     _game_ids = ['2-Back', 'Trail making', 'Morning batch']
 
-    def get_game_ids(self):
+    def list_games(self):
         return MainController._game_ids
                 
-    def get_game_controller(self, game_id):
-        return GameController(game_id)
+    def start_game(self, game_id):
+        widget = Label(text='The {} widget'.format(game_id))
+        # game = MockGame(game_id)
+        game = mock.MagicMock()
+        return game, widget
 
-    def save_score(self, game_id, score):
+    def add_game(self):
         pass
 
+    def save_session(self):
+        pass
+
+ 
 
 class WidgetRepository(object):
     def get_widget(self, name):
@@ -45,7 +65,7 @@ class Tests(ut.TestCase):
         # print(setkivyresourcepath.resource_paths)
         # NOTE: Can't use setUp since kv file is loaded once per test.
         # TODO: Figure out a safer way to write kivy tests.
-        cls.app = TheApp(MainController(), WidgetRepository())
+        cls.app = TheApp(MainController())
         start_app(cls.app)
 
     def test1_many_games(self):
@@ -57,6 +77,27 @@ class Tests(ut.TestCase):
         for (id, btn) in zip(MainController._game_ids, game_buttons):
             self.assertEqual(id, btn.game_id)
         
+    def test2_play_and_stop(self):
+        game_buttons = self.app.game_buttons
+        self.assert_(len(game_buttons) > 0)
+        
+        for game_btn in game_buttons:            
+            press(game_btn)
+            self.assertEqual('PlayScreen', self.app.sm.current)
+            (game_widget,) = self.app.play_screen.ids.game_area.children
+            # HACK: Need to access the game object to check stop, start and cancel was called
+            game = game_widget.game
+            
+            self.assertEqual('The {} widget'.format(game_btn.text), game_widget.text)
+            game.start.assert_called_once_with()
+            
+            press(self.app.play_screen.ids.stop_game_button)            
+            # game.stop.assert_called_once_with()
+            # game.cancel.assert_not_called()
+            
+            self.assertEqual('ScoreScreen', self.app.sm.current)
+
+
     def test2_move_between_screens(self):
         game_buttons = self.app.game_buttons
         self.assert_(len(game_buttons) > 0)
@@ -66,7 +107,7 @@ class Tests(ut.TestCase):
             self.assertEqual('PlayScreen', self.app.sm.current)
             (game_widget,) = self.app.play_screen.ids.game_area.children
             self.assertEqual('The {} widget'.format(game_btn.text), game_widget.text)
-            press(self.app.play_screen.ids.back_button)
+            press(self.app.play_screen.ids.cancel_game_button)
             self.assertEqual('SelectScreen', self.app.sm.current)
 
         for game_btn in game_buttons:

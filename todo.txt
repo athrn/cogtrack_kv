@@ -1,5 +1,10 @@
 * x Connect game to game widget - gui/gamefactory
+* MainApp stop_game_button and cancel_game_button should call controller.stop_game or current_game.stop?
+    * Also, get score and start score screen.
+
 * Connect main app to game factory
+* MainController
+* Connect main gui to main controller.
 * Save score
     * Note: Add 'stopped/cancelled/partial' tag to games that were stopped half way through.
 
