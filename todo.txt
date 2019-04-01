@@ -1,10 +1,6 @@
-* x Connect game to game widget - gui/gamefactory
-* MainApp stop_game_button and cancel_game_button should call controller.stop_game or current_game.stop?
-    * Also, get score and start score screen.
+* Review: stop game button calls game.stop which uses callback to show score. Confusing but handles both when user stops by pressing button and when game stops by itself.
+    * Should probably distinguish between when user presses stop and when game ends by itself.
 
-* Connect main app to game factory
-* MainController
-* Connect main gui to main controller.
 * Save score
     * Note: Add 'stopped/cancelled/partial' tag to games that were stopped half way through.
 
@@ -32,6 +28,16 @@ from kivy.tests.common import GraphicUnitTest, UnitTestTouch
 ** Add games
 ** Save score
 
+
+Done
+
+* x Connect game to game widget - gui/gamefactory
+* x MainApp stop_game_button and cancel_game_button should call controller.stop_game or current_game.stop?
+    * x Also, get score and start score screen.
+
+* x Connect main app to game factory
+* x MainController
+* x Connect main gui to main controller.
 
 x Avoid import and include.
 x Don't know why I can't import theme.py sometimes
