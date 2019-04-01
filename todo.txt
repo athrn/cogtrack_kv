@@ -30,6 +30,7 @@ from kivy.tests.common import GraphicUnitTest, UnitTestTouch
 ** Add games
 ** Save score
 
+* Icons and resource paths. Currently adding resource path in main. 
 
 Done
 

@@ -10,6 +10,8 @@ class MainController(IMainController):
         self.game_factory = game_factory
         self.games = {}
         self.gui = gui
+        # Set self as controller in gui object
+        self.gui.controller = self
 
     def start(self):
         self.show_select_game()

@@ -27,15 +27,14 @@ def make_nback(n_back=2,
     widget.on_match = game.user_match
     widget.on_no_match = game.user_no_match
 
-    game.widget = widget
-    return game
+    return game, widget
 
 
 
 games={'nback': make_nback}
 
-def make_game(name, **kwargs):
-    return games[name](**kwargs)
+def game_factory(game_type, game_settings):
+    return games[game_type](**game_settings)
     
 
 if __name__ == "__main__":

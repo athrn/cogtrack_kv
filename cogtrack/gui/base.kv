@@ -29,8 +29,9 @@
   icon: 'config'
 
   height: theme.default.icon_size
-  
-  background_normal: './icons/{}.png'.format(self.icon)
+
+  # TODO: Use absolute path or move to atlas
+  background_normal: 'icons/{}.png'.format(self.icon)
   background_down: ''
 
   # Fixed Size. Do not scale since scaling is so crap

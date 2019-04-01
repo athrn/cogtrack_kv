@@ -54,7 +54,9 @@ class Tests(ut.TestCase):
         # NOTE: Can't use setUp since kv file is loaded once per test.
         # TODO: Figure out a safer way to write kivy tests.
         cls.app = TheApp()
-        cls.app.controller = make_mock_controller(cls.app)
+        # NOTE: Controller init auto-sets gui.controller
+        cls.controller = make_mock_controller(cls.app)
+        # cls.app.controller = controller
         start_app(cls.app)
 
     def test1_many_games(self):

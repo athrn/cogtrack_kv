@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import unittest as ut
-from gamefactory import make_game
+from gamefactory import game_factory
 
 from testing import press
 import tools
@@ -8,13 +8,13 @@ import tools
 class Tests(ut.TestCase):
 
     def test1_nback(self):
-        g = make_game(name='nback',
-                      n_back=2,
-                      max_rounds=5,
-                      show_symbol_interval=1,
-                      next_symbol_interval=3)
+        g,w = game_factory(game_type='nback',
+                           game_settings=dict(n_back=2,
+                                              max_rounds=5,
+                                              show_symbol_interval=1,
+                                              next_symbol_interval=3))
 
-        w = g.widget
+        
         g.start()
         self.assertEqual(tools.schedule, g.schedule)
         ids = w.ids.score_bar.ids
