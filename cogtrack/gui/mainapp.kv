@@ -60,13 +60,14 @@
         id: cancel_game_button
         icon: 'go-previous'
         # on_press: root.manager.current = 'SelectScreen'
-        on_press: app.controller.current_game.cancel()
+        # on_press: app.controller.current_game.cancel()
+        on_press: app.controller.show_select_game()
       Space:
       ControlButton:
         id: stop_game_button
         icon: 'go-next'
         # on_press: root.manager.current = 'ScoreScreen'
-        on_press: app.controller.current_game.stop()
+        on_press: app.controller.stop_game()
     RelativeLayout:
       id: game_area
 

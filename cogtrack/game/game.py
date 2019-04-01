@@ -7,10 +7,14 @@ class Game(object):
     def __init__(self):
         self.is_running = False
 
+        # TODO: Not used. Remove?
         # Callbacks
         self.on_start = do_nothing
         self.on_stop = do_nothing
         self.on_cancel = do_nothing
+        
+        # Game Over should be used when the game ends by itself and not forced by user interaction.
+        self.on_game_over = do_nothing
 
     def stop(self):
         # NOTE: Must set status before calling on_stop.

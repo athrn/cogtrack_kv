@@ -117,6 +117,7 @@ class NBackGame(game.Game):
         previous_round_was_last = self.current_round == self.max_rounds
         if previous_round_was_last:
             self.stop()
+            self.on_game_over()
             return
 
         char = self.char_generator()

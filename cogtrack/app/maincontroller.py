@@ -22,14 +22,20 @@ class MainController(IMainController):
         self.current_game, game_widget = self.game_factory(game_type, game_settings)
 
         # NOTE: The game may stop either by itself or by the user pressing the stop button.
-        self.current_game.on_stop = self.show_score
-        self.current_game.on_cancel = self.show_select_game
+        # self.current_game.on_stop = self.show_score
+        # self.current_game.on_cancel = self.show_select_game
+
+        self.current_game.on_game_over = self.stop_game
 
         self.gui.show_game(game_widget)
         self.current_game.start()
 
     def show_score(self):
         self.gui.show_score(self.current_game.get_score())
+
+    def stop_game(self):
+        self.current_game.stop()
+        self.show_score()
 
     def save_score(self):
         # TODO: save_score
