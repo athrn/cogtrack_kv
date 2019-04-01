@@ -6,9 +6,10 @@ from cogtrack.game import game
 
 class MainController(IMainController):
 
-    def __init__(self, game_factory, gui):
+    def __init__(self, gui, game_factory):
         self.game_factory = game_factory
         self.games = {}
+        self.gui = gui
 
     def start(self):
         self.show_select_game()
@@ -40,13 +41,13 @@ class MainController(IMainController):
 
 
     def list_games(self):
-        return games.keys()
+        return self.games.keys()
 
 
 
    
 if __name__ == "__main__":
     import unittest as ut
-    MainController(None)
+    MainController(None, None)
     # ut.main(module='test_x', failfast=True, exit=False)
 

@@ -30,7 +30,7 @@
   size_hint: (1, None)
   pos_hint: {'top':1.0} # , 'center_x': 0.5}
   on_press:
-    app.start_game(self.game_id)
+    app.controller.start_game(self.game_id)
 
       
 <MainScreen@Screen>:
@@ -59,12 +59,14 @@
       ControlButton:
         id: cancel_game_button
         icon: 'go-previous'
-        on_press: root.manager.current = 'SelectScreen'
+        # on_press: root.manager.current = 'SelectScreen'
+        on_press: app.controller.current_game.cancel()
       Space:
       ControlButton:
         id: stop_game_button
         icon: 'go-next'
-        on_press: root.manager.current = 'ScoreScreen'
+        # on_press: root.manager.current = 'ScoreScreen'
+        on_press: app.controller.current_game.stop()
     RelativeLayout:
       id: game_area
 
@@ -77,13 +79,13 @@
         id: score_delete_button
         icon: 'score-delete'
         background_color: (1, 0, 0, 0.5)
-        on_press: root.manager.current = 'SelectScreen'
+        on_press: app.controller.show_select_game()
       Space:
       ControlButton:
         id: score_save_button
         icon: 'score-save'
         background_color: (0, 1, 0, 0.5) 
-        on_press: root.manager.current = 'SelectScreen'
+        on_press: app.controller.save_score()
     RelativeLayout:
       id: score_area
       Button:

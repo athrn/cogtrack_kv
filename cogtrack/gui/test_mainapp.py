@@ -9,42 +9,21 @@ from mainapp import TheApp
 
 from kivy.uix.label import Label
 
-from cogtrack.game.igame import IGame
-from cogtrack.app.imaincontroller import IMainController
+from cogtrack.app.maincontroller import MainController
 
 import mock
 
-# class MockGame(IGame):
-#     def __init__(self, game_id):
-#         self.game_id = game_id
 
-#     def start(self):
-#         pass
 
-#     def stop(self):
-#         pass
 
-#     def cancel(self):
-#         pass
+def mock_game_factory(game_type, game_settings):
+    widget = Label(text='The {} widget'.format(game_settings['name']))
+    game = mock.MagicMock()
     
-
-class MainController(IMainController):
-    _game_ids = ['2-Back', 'Trail making', 'Morning batch']
-
-    def list_games(self):
-        return MainController._game_ids
-                
-    def start_game(self, game_id):
-        widget = Label(text='The {} widget'.format(game_id))
-        # game = MockGame(game_id)
-        game = mock.MagicMock()
-        return game, widget
-
-    def add_game(self):
-        pass
-
-    def save_score(self):
-        pass
+    # HACK: MainController relies on callback from game to switch screens.
+    game.stop.side_effect = lambda : game.on_stop()
+    game.cancel.side_effect = lambda : game.on_cancel()
+    return game, widget
 
  
 
@@ -54,6 +33,15 @@ class WidgetRepository(object):
         w.start = lambda : None
         return w
 
+# TODO: Split tests into MainController tests and MainApp tests.
+
+mock_game_names = ['2-Back', 'Trail making', 'Morning batch']
+
+def make_mock_controller(gui):
+    controller = MainController(gui, game_factory=mock_game_factory)
+    for name in mock_game_names:
+        controller.add_game(name, 'GameType', {'name': name})
+    return controller
 
 class Tests(ut.TestCase):
 # class Tests(GraphicUnitTest):
@@ -65,40 +53,43 @@ class Tests(ut.TestCase):
         # print(setkivyresourcepath.resource_paths)
         # NOTE: Can't use setUp since kv file is loaded once per test.
         # TODO: Figure out a safer way to write kivy tests.
-        cls.app = TheApp(MainController())
+        cls.app = TheApp()
+        cls.app.controller = make_mock_controller(cls.app)
         start_app(cls.app)
 
     def test1_many_games(self):
         # NOTE: Use property to get only game buttons. First widget is Glue widget.
         game_buttons = self.app.game_buttons
 
-        self.assertEqual(len(MainController._game_ids), len(game_buttons))
+        self.assertEqual(3, len(game_buttons))
 
-        for (id, btn) in zip(MainController._game_ids, game_buttons):
+        for (id, btn) in zip(sorted(mock_game_names), game_buttons):
             self.assertEqual(id, btn.game_id)
         
-    def test2_play_and_stop(self):
+    def test21_play_and_stop(self):
         game_buttons = self.app.game_buttons
         self.assert_(len(game_buttons) > 0)
+
+        self.assertEqual('SelectScreen', self.app.sm.current)
         
         for game_btn in game_buttons:            
             press(game_btn)
             self.assertEqual('PlayScreen', self.app.sm.current)
             (game_widget,) = self.app.play_screen.ids.game_area.children
             # HACK: Need to access the game object to check stop, start and cancel was called
-            game = game_widget.game
+            game = self.app.controller.current_game
             
             self.assertEqual('The {} widget'.format(game_btn.text), game_widget.text)
             game.start.assert_called_once_with()
             
             press(self.app.play_screen.ids.stop_game_button)            
-            # game.stop.assert_called_once_with()
-            # game.cancel.assert_not_called()
+            game.stop.assert_called_once_with()
+            game.cancel.assert_not_called()
             
             self.assertEqual('ScoreScreen', self.app.sm.current)
 
 
-    def test2_move_between_screens(self):
+    def test22_move_between_screens(self):
         game_buttons = self.app.game_buttons
         self.assert_(len(game_buttons) > 0)
         

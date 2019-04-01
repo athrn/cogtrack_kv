@@ -13,9 +13,9 @@ import base
 # NOTE: Must NOT name the app the same as the kv file. The auto-import happens BEFORE build is called.
 class TheApp(App):
 
-    def __init__(self, main_controller):
+    def __init__(self):
         App.__init__(self)
-        self.controller = main_controller
+        self.controller = None
 
     def build(self):
         root = load_kv(__file__)        
@@ -42,25 +42,39 @@ class TheApp(App):
 
         self.select_screen.ids.select_game_buttons.add_widget(Factory.Space())
 
-    def start_game(self, game_id):
-        game, widget = self.controller.start_game(game_id)
-
-
-        # HACK: Need the game object for testing.
-        widget.game = game
-        
+    def show_game(self, widget):
         game_area = self.play_screen.ids.game_area
         game_area.clear_widgets()
         game_area.add_widget(widget)
         
         self.sm.current = self.play_screen.name
-        game.start()
-        
-    def stop_game(self):
-        pass
+        # game.start()
 
-    def cancel_game(self):
-        pass
+    def show_select_game(self):
+        self.sm.current = self.select_screen.name
+
+    def show_score(self, score):
+        self.sm.current = self.score_screen.name
+
+    # def start_game(self, game_id):
+    #     game, widget = self.controller.start_game(game_id)
+
+
+    #     # HACK: Need the game object for testing.
+    #     widget.game = game
+        
+    #     game_area = self.play_screen.ids.game_area
+    #     game_area.clear_widgets()
+    #     game_area.add_widget(widget)
+        
+    #     self.sm.current = self.play_screen.name
+    #     game.start()
+        
+    # def stop_game(self):
+    #     pass
+
+    # def cancel_game(self):
+    #     pass
         
         
 
