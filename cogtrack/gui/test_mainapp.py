@@ -43,7 +43,7 @@ class MainController(IMainController):
     def add_game(self):
         pass
 
-    def save_session(self):
+    def save_score(self):
         pass
 
  

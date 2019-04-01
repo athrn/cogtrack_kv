@@ -19,6 +19,6 @@ class IMainController:
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def save_session(self, game_name, session):
+    def save_score(self, game_name, session):
         raise NotImplementedError()
    

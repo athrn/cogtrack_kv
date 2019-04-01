@@ -56,7 +56,11 @@ class TheApp(App):
         self.sm.current = self.play_screen.name
         game.start()
         
-        
+    def stop_game(self):
+        pass
+
+    def cancel_game(self):
+        pass
         
         
 

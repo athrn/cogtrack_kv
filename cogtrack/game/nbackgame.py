@@ -5,7 +5,7 @@ from math import sqrt
 import time
 import itertools
 
-import igame
+import game
 
 from cogtrack.tools.stats import Stats
 
@@ -32,7 +32,7 @@ def fixed_chars(chars="ABCDEF"):
 current_time = time.time
 
 
-class NBackGame(igame.IGame):
+class NBackGame(game.Game):
 
     def __init__(self,
                  show_symbol=lambda symbol: None,
@@ -43,6 +43,8 @@ class NBackGame(igame.IGame):
                  show_symbol_interval=2,
                  next_symbol_interval=3,
                  char_generator = random_chars()):
+
+        game.Game.__init__(self)
 
         self.show_symbol_interval = show_symbol_interval
         self.next_symbol_interval = next_symbol_interval
@@ -58,7 +60,6 @@ class NBackGame(igame.IGame):
         # TODO: Rename. Better name for the displayed symbol. Symbol? Memorized symbol?
         self.char_count = 0
 
-        self.is_stopped = False
         self.has_guessed = True
 
         self.history = ['']*(self.n_back + 1)
@@ -107,7 +108,7 @@ class NBackGame(igame.IGame):
 
  
     def next_char(self):
-        if self.is_stopped:
+        if not self.is_running:
             return
 
         if (not self.has_guessed and self.is_after_warmup()):
@@ -139,7 +140,7 @@ class NBackGame(igame.IGame):
         return self.history[cur] == self.history[prev]
 
     def parse_response(self, name):
-        if self.is_stopped or not self.is_after_warmup():
+        if not self.is_running or not self.is_after_warmup():
             return
 
         if not self.has_guessed:
@@ -152,19 +153,16 @@ class NBackGame(igame.IGame):
 
     def user_no_match(self):
         self.parse_response(NO_MATCH)
-
-    def stop(self):
-        self.is_stopped = True
-
+        
     def start(self):
         # TODO: Test this.
-        self.show_symbol('3')
+        self.schedule(0, lambda : self.show_symbol('3'))
         self.schedule(1, lambda : self.show_symbol('2'))
         self.schedule(2, lambda : self.show_symbol('1'))
         self.schedule(3, self.next_char)
-
-    def cancel(self):
-        pass
+        # TODO: Replace with super()
+        super(type(self), self).start()
+        return self
 
 
 if __name__ == "__main__":
