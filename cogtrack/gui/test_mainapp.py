@@ -114,7 +114,7 @@ class Tests(ut.TestCase):
             self.assertEqual('PlayScreen', self.app.sm.current)
             press(self.app.play_screen.ids.stop_game_button)
             self.assertEqual('ScoreScreen', self.app.sm.current)
-            press(self.app.score_screen.ids.score_delete_button)
+            press(self.app.score_screen.ids.score_cancel_button)
             self.assertEqual('SelectScreen', self.app.sm.current)
 
         

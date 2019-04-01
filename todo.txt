@@ -1,5 +1,7 @@
-* Review: stop game button calls game.stop which uses callback to show score. Confusing but handles both when user stops by pressing button and when game stops by itself.
-    * Should probably distinguish between when user presses stop and when game ends by itself.
+* Write MainController tests.
+* Cleanup
+  * IMainController is unused.
+  * Game has callbacks and is_running logic which isn't necessary anymore 
 
 * Save score
     * Note: Add 'stopped/cancelled/partial' tag to games that were stopped half way through.
@@ -31,6 +33,9 @@ from kivy.tests.common import GraphicUnitTest, UnitTestTouch
 
 Done
 
+
+* x Review: stop game button calls game.stop which uses callback to show score. Confusing but handles both when user stops by pressing button and when game stops by itself.
+    * x Should probably distinguish between when user presses stop and when game ends by itself.
 * x Connect game to game widget - gui/gamefactory
 * x MainApp stop_game_button and cancel_game_button should call controller.stop_game or current_game.stop?
     * x Also, get score and start score screen.

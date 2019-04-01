@@ -37,6 +37,10 @@ class MainController(IMainController):
         self.current_game.stop()
         self.show_score()
 
+    def cancel_game(self):
+        self.current_game.cancel()
+        self.show_select_game()
+
     def save_score(self):
         # TODO: save_score
         self.show_select_game()

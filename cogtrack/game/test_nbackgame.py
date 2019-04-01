@@ -436,18 +436,19 @@ class Tests(ut.TestCase):
 
 
     def test93_on_stop(self):
-        on_stop=MagicMock()
+        on_game_over=MagicMock()
         nback = NBackGame(max_rounds=3, n_back=2).start()
-        nback.on_stop = on_stop
+        nback.on_game_over = on_game_over
         nback.next_char()
         nback.next_char()
         nback.next_char() # 1
         nback.next_char() # 2
         nback.next_char() # 3
-        on_stop.assert_not_called()
+        on_game_over.assert_not_called()
         nback.next_char() # Finished
-        on_stop.assert_called_once_with()
-
+        on_game_over.assert_called_once_with()
+        nback.next_char() # Game over only called once
+        on_game_over.assert_called_once_with()
         
         
 
