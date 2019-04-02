@@ -1,10 +1,8 @@
 # -*- coding: utf-8 -*-
 
-from imaincontroller import IMainController
-
 from cogtrack.game import game
 
-class MainController(IMainController):
+class MainController(object):
 
     def __init__(self, gui, game_factory):
         self.game_factory = game_factory
@@ -14,7 +12,7 @@ class MainController(IMainController):
         self.gui.controller = self
 
     def start(self):
-        self.show_select_game()
+        self._show_select_game()
 
     def add_game(self, game_name, game_type, game_settings):
         self.games[game_name] = (game_type, game_settings)
@@ -23,31 +21,31 @@ class MainController(IMainController):
         (game_type, game_settings) = self.games[game_name]
         self.current_game, game_widget = self.game_factory(game_type, game_settings)
 
-        # NOTE: The game may stop either by itself or by the user pressing the stop button.
-        # self.current_game.on_stop = self.show_score
-        # self.current_game.on_cancel = self.show_select_game
-
+        # NOTE: The game may call on_game_over when it is finished.
         self.current_game.on_game_over = self.stop_game
 
         self.gui.show_game(game_widget)
         self.current_game.start()
 
-    def show_score(self):
+    def _show_score(self):
         self.gui.show_score(self.current_game.get_score())
 
     def stop_game(self):
         self.current_game.stop()
-        self.show_score()
+        self._show_score()
 
     def cancel_game(self):
         self.current_game.cancel()
-        self.show_select_game()
+        self._show_select_game()
 
     def save_score(self):
         # TODO: save_score
-        self.show_select_game()
-            
-    def show_select_game(self):
+        self._show_select_game()
+
+    def discard_score(self):
+        self._show_select_game()
+
+    def _show_select_game(self):
         self.current_game = None
         self.gui.show_select_game()
 
@@ -60,6 +58,5 @@ class MainController(IMainController):
    
 if __name__ == "__main__":
     import unittest as ut
-    MainController(None, None)
-    # ut.main(module='test_x', failfast=True, exit=False)
+    ut.main(module='test_maincontroller', failfast=True, exit=False)
 
