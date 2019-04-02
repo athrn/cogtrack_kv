@@ -1,27 +1,17 @@
-* Write MainController tests.
-* Cleanup
-  * IMainController is unused.
-  * Game has callbacks and is_running logic which isn't necessary anymore 
+* show score
 
 * Save score
     * Note: Add 'stopped/cancelled/partial' tag to games that were stopped half way through.
 
+* Cleanup / Reconsider
+  * Game has callbacks and is_running logic which isn't necessary in a baseclass anymore
+
 https://kivy.org/doc/stable/contribute-unittest.html
 from kivy.tests.common import GraphicUnitTest, UnitTestTouch
 
-* Better names for user interactions. user_match
+* Better names for user interactions, callbacks and events. user_match
   * Signal/slot
   * Send/receive
-
-* Consider replacing all "include"s in kv files with load_file from python.
-  * Every kv file has corresponding py file with load_file(__file__)
-  * If b.kv depends on a.kv, b.py must include a.kv before loading b.kv
-  * Pythons import mechanism will prevent double loading.
-  * Some of Kivys path issues can be avoided.
-  * Does not solve #:import of python stuff.
-
-* Testing. base.kv not found if running pytest from root directory and not gui directory.
-** Check out paths etc for finding kv files.
 
 * kivy unittesting is a hack.
 * x Use deprecated interactive launcher or something else?
@@ -32,18 +22,17 @@ from kivy.tests.common import GraphicUnitTest, UnitTestTouch
 
 * Icons and resource paths. Currently adding resource path in main. 
 
-Done
+! Done
 
+* Consider replacing all "include"s in kv files with load_file from python.
+  * Every kv file has corresponding py file with load_file(__file__)
+  * If b.kv depends on a.kv, b.py must include a.kv before loading b.kv
+  * Pythons import mechanism will prevent double loading.
+  * Some of Kivys path issues can be avoided.
+  * Does not solve #:import of python stuff.
 
-* x Review: stop game button calls game.stop which uses callback to show score. Confusing but handles both when user stops by pressing button and when game stops by itself.
-    * x Should probably distinguish between when user presses stop and when game ends by itself.
-* x Connect game to game widget - gui/gamefactory
-* x MainApp stop_game_button and cancel_game_button should call controller.stop_game or current_game.stop?
-    * x Also, get score and start score screen.
-
-* x Connect main app to game factory
-* x MainController
-* x Connect main gui to main controller.
+* x Testing. base.kv not found if running pytest from root directory and not gui directory.
+** x Check out paths etc for finding kv files.
 
 x Avoid import and include.
 x Don't know why I can't import theme.py sometimes
