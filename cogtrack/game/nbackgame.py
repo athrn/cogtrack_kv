@@ -69,15 +69,17 @@ class NBackGame(game.Game):
         self._reset_score_and_reaction_time()
 
     def _reset_score_and_reaction_time(self):
-        self.score = {}
+        self._score = {}
         self.reaction_time = {}
         for response in [MATCH, NO_MATCH, NO_RESPONSE]:
-            self.score[response] = {}
+            self._score[response] = {}
             self.reaction_time[response] = {}
             for is_match in [True, False]:
-                self.score[response][is_match] = 0
+                self._score[response][is_match] = 0
                 self.reaction_time[response][is_match] = Stats()
 
+    def score(self):
+        return self._score
 
     @property
     def current_round(self):
@@ -92,14 +94,14 @@ class NBackGame(game.Game):
         reaction_time = current_time() - self.reaction_start_time
 
         is_match = self.is_current_symbol_a_match()
-        self.score[name][is_match] += 1
+        self._score[name][is_match] += 1
         self.reaction_time[name][is_match] += reaction_time
 
-        self.show_score(correct_match=self.score[MATCH][True],
-                        correct_no_match=self.score[NO_MATCH][False],
-                        wrong_match=self.score[MATCH][False],
-                        wrong_no_match=self.score[NO_MATCH][True],
-                        no_response=self.score[NO_RESPONSE][False] + self.score[NO_RESPONSE][True],
+        self.show_score(correct_match=self._score[MATCH][True],
+                        correct_no_match=self._score[NO_MATCH][False],
+                        wrong_match=self._score[MATCH][False],
+                        wrong_no_match=self._score[NO_MATCH][True],
+                        no_response=self._score[NO_RESPONSE][False] + self._score[NO_RESPONSE][True],
                         )
         
 

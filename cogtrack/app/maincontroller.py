@@ -13,6 +13,7 @@ class MainController(object):
 
     def start(self):
         self._show_select_game()
+        return self
 
     def add_game(self, game_name, game_type, game_settings):
         self.games[game_name] = (game_type, game_settings)
@@ -28,7 +29,7 @@ class MainController(object):
         self.current_game.start()
 
     def _show_score(self):
-        self.gui.show_score(self.current_game.get_score())
+        self.gui.show_score(self.current_game.score())
 
     def stop_game(self):
         self.current_game.stop()

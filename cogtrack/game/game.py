@@ -1,9 +1,14 @@
 # -*- coding: utf-8 -*-
 
+import abc
+
 def do_nothing():
     pass
 
-class Game(object):
+class Game:
+    
+    __metaclass__ = abc.ABCMeta
+    
     def __init__(self):
         # TODO: is_running no longer needs to be in base class. 
         self.is_running = False
@@ -33,3 +38,7 @@ class Game(object):
         self.is_running = False
         # self.on_cancel()
         return self
+
+    @abc.abstractmethod
+    def score(self):
+        pass

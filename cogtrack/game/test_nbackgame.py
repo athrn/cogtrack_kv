@@ -8,9 +8,10 @@ from mock import MagicMock, call
 def score_sanity_check(nback, offset=0):
     # TODO: Sanity check. Doesn't work for no response.
     responses = 0
-    for r in nback.score:
-        for m in nback.score[r]:
-            responses += nback.score[r][m]
+    score = nback.score()
+    for r in score:
+        for m in score[r]:
+            responses += score[r][m]
 
     assert nback.current_round - offset == responses
 
@@ -25,12 +26,13 @@ def assert_score(nback,
                  wrong_no_match=0,
                  no_response_match=0,
                  no_response_no_match=0):
-    assert_equal(correct_match, nback.score[MATCH][True])
-    assert_equal(correct_no_match, nback.score[NO_MATCH][False])
-    assert_equal(wrong_match, nback.score[MATCH][False])
-    assert_equal(wrong_no_match, nback.score[NO_MATCH][True])
-    assert_equal(no_response_match, nback.score[NO_RESPONSE][True])
-    assert_equal(no_response_no_match, nback.score[NO_RESPONSE][False])
+    score = nback.score()
+    assert_equal(correct_match, score[MATCH][True])
+    assert_equal(correct_no_match, score[NO_MATCH][False])
+    assert_equal(wrong_match, score[MATCH][False])
+    assert_equal(wrong_no_match, score[NO_MATCH][True])
+    assert_equal(no_response_match, score[NO_RESPONSE][True])
+    assert_equal(no_response_no_match, score[NO_RESPONSE][False])
 
     
  
