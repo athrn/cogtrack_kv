@@ -5,7 +5,7 @@ from pprint import pprint
 # from kivy.tests.common import GraphicUnitTest
 
 from testing import start_app, press
-from mainapp import TheApp
+from mainapp import TheApp, format_score
 
 from kivy.uix.label import Label
 
@@ -19,7 +19,8 @@ import mock
 def mock_game_factory(game_type, game_settings):
     widget = Label(text='The {} widget'.format(game_settings['name']))
     game = mock.MagicMock()
-    
+    game.name = game_settings['name']
+    game.score.return_value = dict(x=1, y=2.0, name=game.name)
     # HACK: MainController relies on callback from game to switch screens.
     game.stop.side_effect = lambda : game.on_stop()
     game.cancel.side_effect = lambda : game.on_cancel()
@@ -64,6 +65,9 @@ class Tests(ut.TestCase):
         # cls.app.controller = controller
         start_app(cls.app)
 
+    def setUp(self):
+        self.app.show_select_game()
+
     def test1_many_games(self):
         # NOTE: Use property to get only game buttons. First widget is Glue widget.
         game_buttons = find_game_buttons(self.app)
@@ -98,6 +102,10 @@ class Tests(ut.TestCase):
             
             self.assertEqual('ScoreScreen', self.app.sm.current)
 
+            e = format_score(dict(name=game.name, x=1, y=2.0))
+            self.assertEqual(e, self.app.score_screen.ids.score_text_area.text)
+
+
 
     def test23_play_and_cancel(self):
         game_buttons = find_game_buttons(self.app)
@@ -117,6 +125,12 @@ class Tests(ut.TestCase):
             press(self.app.score_screen.ids.score_discard_button)
             self.assertEqual('SelectScreen', self.app.sm.current)
 
+
+    def test20_show_score(self):
+        score = dict(x=1, y=2.0, name='A Name')
+        self.app.show_score(score)
+        e = format_score(score)
+        self.assertEqual(e, self.app.score_screen.ids.score_text_area.text)
 
 
 if __name__ == "__main__":

@@ -10,6 +10,10 @@ from tools import load_kv
 # HACK: Must load base.py before loading mainapp.kv. mainapp depends on base but can't #include for whatever reason
 import base
 
+def format_score(score):
+    return '\n'.join('{}: {}'.format(k,v) for k,v in sorted(score.items()))
+        
+
 # NOTE: Must NOT name the app the same as the kv file. The auto-import happens BEFORE build is called.
 class TheApp(App):
 
@@ -51,12 +55,13 @@ class TheApp(App):
 
 
     def show_score(self, score):
+        self.score_screen.ids.score_text_area.text = format_score(score)
         self.sm.current = self.score_screen.name
 
 
 if __name__ == "__main__":
     import unittest as ut
-    ut.main(module='test_mainapp', failfast=True, exit=True)
+    ut.main(module='test_mainapp', failfast=True, exit=False)
 
     from mainappdemo import run
     run()
