@@ -77,8 +77,8 @@
     orientation: 'vertical'
     ControlBar:
       ControlButton:
-        id: score_cancel_button
-        icon: 'score-cancel'
+        id: score_discard_button
+        icon: 'score-discard'
         background_color: (1, 0, 0, 0.5)
         on_press: app.controller.discard_score()
       Space:
@@ -88,8 +88,8 @@
         background_color: (0, 1, 0, 0.5) 
         on_press: app.controller.save_score()
     RelativeLayout:
-      id: score_area
-      Button:
+      Label:
+        id: score_text_area
         text: 'Score'
 
   

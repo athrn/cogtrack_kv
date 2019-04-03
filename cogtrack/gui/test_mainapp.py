@@ -37,6 +37,11 @@ class WidgetRepository(object):
 
 mock_game_names = ['2-Back', 'Trail making', 'Morning batch']
 
+def find_game_buttons(app):
+    # NOTE: Return only game buttons. Ignore Space
+    return [btn for btn in app.select_screen.ids.select_game_buttons.children if btn.text.strip()]
+
+
 def make_mock_controller(gui):
     controller = MainController(gui, game_factory=mock_game_factory)
     for name in mock_game_names:
@@ -61,15 +66,18 @@ class Tests(ut.TestCase):
 
     def test1_many_games(self):
         # NOTE: Use property to get only game buttons. First widget is Glue widget.
-        game_buttons = self.app.game_buttons
+        game_buttons = find_game_buttons(self.app)
 
         self.assertEqual(3, len(game_buttons))
 
         for (id, btn) in zip(sorted(mock_game_names), game_buttons):
             self.assertEqual(id, btn.game_id)
         
-    def test21_play_and_stop(self):
-        game_buttons = self.app.game_buttons
+
+        
+        
+    def test22_play_and_stop(self):
+        game_buttons = find_game_buttons(self.app)
         self.assert_(len(game_buttons) > 0)
 
         self.assertEqual('SelectScreen', self.app.sm.current)
@@ -91,36 +99,25 @@ class Tests(ut.TestCase):
             self.assertEqual('ScoreScreen', self.app.sm.current)
 
 
-    def test22_move_between_screens(self):
-        game_buttons = self.app.game_buttons
-        self.assert_(len(game_buttons) > 0)
-        
-        for game_btn in game_buttons:            
+    def test23_play_and_cancel(self):
+        game_buttons = find_game_buttons(self.app)
+        for game_btn in game_buttons:
             press(game_btn)
             self.assertEqual('PlayScreen', self.app.sm.current)
-            (game_widget,) = self.app.play_screen.ids.game_area.children
-            self.assertEqual('The {} widget'.format(game_btn.text), game_widget.text)
             press(self.app.play_screen.ids.cancel_game_button)
             self.assertEqual('SelectScreen', self.app.sm.current)
 
+    def test23_play_and_discard_score(self):
+        game_buttons = find_game_buttons(self.app)
         for game_btn in game_buttons:
             press(game_btn)
             self.assertEqual('PlayScreen', self.app.sm.current)
             press(self.app.play_screen.ids.stop_game_button)
             self.assertEqual('ScoreScreen', self.app.sm.current)
-            press(self.app.score_screen.ids.score_save_button)
+            press(self.app.score_screen.ids.score_discard_button)
             self.assertEqual('SelectScreen', self.app.sm.current)
 
-        for game_btn in game_buttons:
-            press(game_btn)
-            self.assertEqual('PlayScreen', self.app.sm.current)
-            press(self.app.play_screen.ids.stop_game_button)
-            self.assertEqual('ScoreScreen', self.app.sm.current)
-            press(self.app.score_screen.ids.score_cancel_button)
-            self.assertEqual('SelectScreen', self.app.sm.current)
 
-        
-        
 
 if __name__ == "__main__":
     ut.main(failfast=True, exit=False)

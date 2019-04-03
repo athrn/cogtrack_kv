@@ -25,10 +25,6 @@ class TheApp(App):
         self.score_screen = root.ids.score_screen
         return root
 
-    @property
-    def game_buttons(self):
-        # NOTE: Return only game buttons. Ignore Space
-        return [btn for btn in self.select_screen.ids.select_game_buttons.children if btn.text.strip()]
 
     def on_start(self):
         self.select_screen.ids.select_game_buttons.clear_widgets()
@@ -53,35 +49,16 @@ class TheApp(App):
     def show_select_game(self):
         self.sm.current = self.select_screen.name
 
+
     def show_score(self, score):
         self.sm.current = self.score_screen.name
-
-    # def start_game(self, game_id):
-    #     game, widget = self.controller.start_game(game_id)
-
-
-    #     # HACK: Need the game object for testing.
-    #     widget.game = game
-        
-    #     game_area = self.play_screen.ids.game_area
-    #     game_area.clear_widgets()
-    #     game_area.add_widget(widget)
-        
-    #     self.sm.current = self.play_screen.name
-    #     game.start()
-        
-    # def stop_game(self):
-    #     pass
-
-    # def cancel_game(self):
-    #     pass
-        
-        
-
 
 
 if __name__ == "__main__":
     import unittest as ut
-    ut.main(module='test_mainapp', failfast=True, exit=False)
+    ut.main(module='test_mainapp', failfast=True, exit=True)
+
+    from mainappdemo import run
+    run()
 
     
