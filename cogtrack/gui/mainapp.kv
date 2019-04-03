@@ -88,9 +88,21 @@
         background_color: (0, 1, 0, 0.5) 
         on_press: app.controller.save_score()
     ScrollView:
-      Label:
+      # size_hint: 1,1
+      # canvas.before:
+      #   Color:
+      #     rgba: 1,0,0,1
+      #   Rectangle:
+      #     pos: self.pos
+      #     size: self.size
+
+      BaseLabel:
         id: score_text_area
         text: 'Score'
+        # TODO: pos_hint does not work with scrollview?
+        # pos_hint: {'center_x':0.5} # , 'center_y':0.5}
+        # size_hint: None, None
+        
         # NOTE: Must set Y size_hint to None or the size is auto set to fit within scrollview.
         size_hint: 1, None
         # NOTE: Set label size to match text size. Must "oversize" widget for scrollview to activate.
