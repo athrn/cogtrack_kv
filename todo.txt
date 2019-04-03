@@ -7,8 +7,6 @@
    * Calculate required number of symbols for equal probability
    * Create random match positions and generate sequence with non-match/match depending on pos
 
-* Ghost lines on canvas. Why?
-
 * Save score
     * Note: Add 'stopped/cancelled/partial' tag to games that were stopped half way through.
 

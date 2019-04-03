@@ -5,14 +5,16 @@
 
 # DEBUG: Draw red lines around all widgets.
 <Widget>:
-  canvas.before:
+  canvas.after:
     Color:
-      rgba: 1,0,0,0.5
-    # Rectangle:
-    #   pos: self.pos
-    #   size: self.size
+      rgba: 1,0,0,0.2
     Line:
-      points: [0,0, self.width,0, self.width,self.height, 0,self.height, self.width,0] # , 0,0, self.width,self.height]
+      points:
+        self.x,            self.y,  \
+        self.x+self.width, self.y, \
+        self.x+self.width, self.y+self.height, \
+        self.x,            self.y+self.height, \
+        self.x+self.width, self.y
 
 <Background@Widget>:
   bg: 0., 0., 0., 0.
