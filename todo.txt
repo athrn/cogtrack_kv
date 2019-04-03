@@ -1,10 +1,10 @@
-* show score
+* x show score
 
 * Save score
     * Note: Add 'stopped/cancelled/partial' tag to games that were stopped half way through.
 
 * Cleanup / Reconsider
-  * Game has callbacks and is_running logic which isn't necessary in a baseclass anymore
+  * Game has callbacks and is_running logic which isn't necessary in the baseclass anymore
 
 https://kivy.org/doc/stable/contribute-unittest.html
 from kivy.tests.common import GraphicUnitTest, UnitTestTouch

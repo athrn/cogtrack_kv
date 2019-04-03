@@ -87,10 +87,14 @@
         icon: 'score-save'
         background_color: (0, 1, 0, 0.5) 
         on_press: app.controller.save_score()
-    RelativeLayout:
+    ScrollView:
       Label:
         id: score_text_area
         text: 'Score'
+        # NOTE: Must set Y size_hint to None or the size is auto set to fit within scrollview.
+        size_hint: 1, None
+        # NOTE: Set label size to match text size. Must "oversize" widget for scrollview to activate.
+        size: self.texture_size
 
   
 ScreenManager:
