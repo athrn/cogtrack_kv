@@ -1,4 +1,11 @@
 * x show score
+* Save score to database / csv / google docs 
+* NBack score formatting
+
+* NBack improved character generator.
+   * Set N matches in M rounds.
+   * Calculate required number of symbols for equal probability
+   * Create random match positions and generate sequence with non-match/match depending on pos
 
 * Ghost lines on canvas. Why?
 
