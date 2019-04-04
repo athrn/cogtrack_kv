@@ -9,7 +9,7 @@ from mainapp import TheApp, format_score
 
 from kivy.uix.label import Label
 
-from cogtrack.app.maincontroller import MainController
+from cogtrack.core.maincontroller import MainController
 
 import mock
 

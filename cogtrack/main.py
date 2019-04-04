@@ -14,7 +14,7 @@ from kivy.resources import resource_add_path
 import cogtrack.game
 from cogtrack.gui.mainapp import TheApp
 from cogtrack.gui.gamefactory import game_factory
-from cogtrack.app.maincontroller import MainController
+from cogtrack.core.maincontroller import MainController
 
 
 
