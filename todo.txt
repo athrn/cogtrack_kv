@@ -1,5 +1,18 @@
-* x show score
 * Save score to database / csv / google docs 
+
+Sqlite backend:
+* load_games
+* add_game
+* save_session
+
+* google docs backend - not full backend. Only save score, do not load?
+
+Internal
+* create_dict_tables()
+* save_dict(id_column, key_table, value_table) 
+
+* NBack match/no_match color scheme. Green/Blue w red hue for errors?
+
 * NBack score formatting
 
 * NBack improved character generator.
@@ -28,6 +41,8 @@ from kivy.tests.common import GraphicUnitTest, UnitTestTouch
 ** Save score
 
 * Icons and resource paths. Currently adding resource path in main. 
+
+
 
 ! Done
 
