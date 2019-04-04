@@ -45,7 +45,7 @@ def create_game_session_tables():
 Create Table GameSession
 (
 id Integer Primary Key,
-timestamp Real Date Not Null,
+"timestamp" Real Timestamp Not Null,
 game_id Integer References Game(id)
 );'''
 
@@ -92,6 +92,11 @@ def create_tables():
                                foreign_key_column='game_id')
 
     cmds += create_game_session_tables()
+
+
+    # Auto detect dates etc.
+    # https://www.pythoncentral.io/advanced-sqlite-usage-in-python/
+    # db = sqlite3.connect(':memory:', detect_types=sqlite3.PARSE_DECLTYPES|sqlite3.PARSE_COLNAMES)
 
     con = sqlite3.connect(":memory:")
     cur = con.cursor()

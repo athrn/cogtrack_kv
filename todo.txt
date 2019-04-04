@@ -1,5 +1,13 @@
 * Save score to database / csv / google docs 
 
+* Sqlitehelper: Create, insert, update etc for dict like tables.
+
+* Consider on delete cascade and proper naming of constraints. Could help with future updates.
+CONSTRAINT fk_departments
+    FOREIGN KEY (department_id)
+    REFERENCES departments(department_id)
+    ON DELETE CASCADE
+
 Sqlite backend:
 * load_games
 * add_game
