@@ -1,6 +1,7 @@
-* Save score to database / csv / google docs 
-
-* Sqlitehelper: Create, insert, update etc for dict like tables.
+* Save score to database / csv / google docs
+* Sqlitehelper: Create, insert, update etc for dicts
+    * load_all_dicts
+    
 
 * Consider on delete cascade and proper naming of constraints. Could help with future updates.
 CONSTRAINT fk_departments
