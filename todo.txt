@@ -1,24 +1,21 @@
 * Save score to database / csv / google docs
-* Sqlitehelper: Create, insert, update etc for dicts
-    * load_all_dicts
-    
-
-* Consider on delete cascade and proper naming of constraints. Could help with future updates.
-CONSTRAINT fk_departments
-    FOREIGN KEY (department_id)
-    REFERENCES departments(department_id)
-    ON DELETE CASCADE
 
 Sqlite backend:
 * load_games
 * add_game
 * save_session
 
-* google docs backend - not full backend. Only save score, do not load?
+* Name the database file with the db version number cogtrack_v1.db
+   * In the future, use upgrade scripts upgrade1to2.py to manage database changes
+* App version number
+   * N(.N)*{a|b|rc}N
+   * <major version>.<minor version>.<patch> with separate db versioning
+   * <major version>.<db version>.<patch>
+   * <major version>.<minor version>.<db version>.<patch>
+   * minor version for added compatible content
+* Write dev notes / dev docs. Main components, game, maincontroller etc.
 
-Internal
-* create_dict_tables()
-* save_dict(id_column, key_table, value_table) 
+* google docs backend - not full backend. Only save score, do not load?
 
 * NBack match/no_match color scheme. Green/Blue w red hue for errors?
 

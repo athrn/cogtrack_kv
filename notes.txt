@@ -2,3 +2,11 @@
 * Using icons from xubuntu highcontrast icons /usr/share/icons/HighContrast/scalable
     * Would prefer to use unicode glyphs but can't use any above 0xFFFF
     * https://github.com/kivy/kivy/issues/4741
+
+
+* sqlite
+    * https://python-for-android.readthedocs.io/en/latest/buildoptions/#requirements-blacklist-apk-size-optimization
+    * https://github.com/kivy/python-for-android/issues/977
+    * https://github.com/kivy/python-for-android/issues/1564
+    * https://groups.google.com/forum/#!topic/kivy-users/5ZLB1IWL0qE
+    * https://github.com/kivy/buildozer/issues/56
