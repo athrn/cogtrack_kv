@@ -1,4 +1,9 @@
+* Rename game_type to game_engine?
+    * game_engine(game_settings) = game_session / game_instance?
+    * game_factory(game_type, same_settings) = game_session / game_instance?           
 * Save score to database / csv / google docs
+
+* tags: multiple choice key-value pairs. Wellbeing, Alertness, Time of Day etc.
 
 Sqlite backend:
 * load_games

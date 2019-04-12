@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import sqlite3
 from sqlitehelper import DictHelper
+import datetime
 
 create_base_tables = '''
 Create Table GameType
@@ -46,6 +47,9 @@ Insert Into ProgramInfo (key, value) Values ("db_version", "1.0");
 # Presentation / Theme
 # name - display_name & description
 
+from collections import namedtuple
+
+Game = namedtuple('GameDef', 'id name type settings'.split())
 
 
 class SqliteBackend(object):
@@ -53,7 +57,8 @@ class SqliteBackend(object):
         if con:
             self.con = con
         else:
-            self.con = sqlite3.connect(path, detect_types=sqlite3.PARSE_DECLTYPES)
+            self.con = sqlite3.connect(path,
+                                       detect_types=sqlite3.PARSE_DECLTYPES) # |sqlite3.PARSE_COLNAMES)
             self.con.execute('PRAGMA foreign_keys=ON')
             self.con.commit()
         
@@ -74,12 +79,85 @@ class SqliteBackend(object):
     def initialize(self):
         db_exists = "SELECT name FROM sqlite_master WHERE type='table' AND name='ProgramInfo';"
         if not self.con.execute(db_exists).fetchall():
-            self.con.executescript(create_base_tables)
+            cur = self.con.cursor()
+            cur.executescript(create_base_tables)
+            self.game_settings.create_tables(cur)
+            self.session_info.create_tables(cur)
+            self.session_stats.create_tables(cur)
             self.con.commit()
 
-        get_db_version = 'Select value from ProgramInfo where key="db_version"'
-        (self.db_version,) = self.con.execute(get_db_version).fetchone()
+        self.reload()
 
+    def reload(self):
+        # TODO: Assert something relating to db_version?
+        db_version_cmd = 'Select value from ProgramInfo where key="db_version"'
+        (self.db_version,) = self.con.execute(db_version_cmd).fetchone()
+
+        self.load_game_types()        
+    
+
+    def load_game_types(self):
+        self.game_types = dict(self.con.execute('Select name, id From GameType'))
+        return self.game_types
+        
+
+    def update_game_types(self, game_types):
+        removed = set(self.game_types) - set(game_types)
+        if removed:
+            raise ValueError('Can not remove game types')
+        
+        missing = set(game_types) - set(self.game_types)
+        cur = self.con.cursor()
+        for game_type in missing:
+            cur.execute('Insert Into GameType(name) Values (?);', [game_type])
+
+        self.load_game_types()
+
+
+    def add_game(self, game_name, game_type, game_settings):
+        game_type_id = self.game_types[game_type]
+        
+        cur = self.con.cursor()
+        cur.execute('Insert Into Game(name, game_type_id) Values (?,?);', [game_name, game_type_id])
+        (game_id,) = cur.execute('Select id from Game Where name = ?;', [game_name]).fetchone()
+        self.game_settings.save(cur=cur,
+                                foreign_key=game_id,
+                                data=game_settings
+                                )
+        self.con.commit()
+
+
+    # def update_game(self, game_def):
+    #     pass
+
+    def load_games(self):
+        cur = self.con.cursor()
+        settings = self.game_settings.load_dicts(cur)
+
+        cmd = "Select G.id, G.name, T.name From Game G Inner Join GameType T On G.game_type_id = T.id"
+        rows = cur.execute(cmd)
+        games = [Game(id=id, name=name, type=type_name, settings=settings[id]) for id, name, type_name in rows]
+        return games
+        
+        
+
+    def save_session(self,
+                     game_name,
+                     # TODO: Replace info with tags.
+                     session_info,
+                     session_stats,
+                     timestamp=None):
+        if not timestamp:
+            timestamp=datetime.datetime.now()
+
+        (game_id,) = self.con.execute("Select id From Game Where name = ?", [game_name]).fetchone()
+
+        cur = self.con.cursor()
+        cur.execute('Insert Into GameSession(game_id, timestamp) Values (?, ?)', [game_id, timestamp])
+        (session_id,) = cur.execute('Select last_insert_rowid();').fetchone()
+        self.session_info.save(cur, foreign_key=session_id, data=session_info)
+        self.session_stats.save(cur, foreign_key=session_id, data=session_stats)
+        self.con.commit()
 
 
 if __name__ == "__main__":
